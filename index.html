@@ -1,0 +1,2963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELOCITY · Plan Pareja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+window.__supabaseCreateClient = createClient;
+</script>
+<style>
+:root {
+    --bg-deep: #0A0A0B;
+    --bg-card: #131316;
+    --bg-elevated: #1C1C20;
+    --bg-hover: #25252A;
+    --line: #2A2A30;
+    --line-bright: #3A3A42;
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #6B6B73;
+    --accent: #00D4FF;
+    --accent-soft: rgba(0, 212, 255, 0.12);
+    --gold: #D4AF37;
+    --red: #DC2626;
+    --green: #10B981;
+
+    --bofa-color: #DC2626;
+    --bofa-bg: rgba(220, 38, 38, 0.12);
+    --chase-color: #3B82F6;
+    --chase-bg: rgba(59, 130, 246, 0.15);
+    --suncoast-color: #A78BFA;
+    --suncoast-bg: rgba(167, 139, 250, 0.15);
+    --bprafa-color: #F59E0B;
+    --bprafa-bg: rgba(245, 158, 11, 0.15);
+    --conjunta-color: #10B981;
+    --conjunta-bg: rgba(16, 185, 129, 0.15);
+    --amex-color: #6EE7B7;
+    --amex-bg: rgba(110, 231, 183, 0.12);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+    margin: 0;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Manrope', system-ui, sans-serif;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -30%;
+    width: 80%;
+    height: 100%;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container { max-width: 1280px; margin: 0 auto; padding: 24px; position: relative; z-index: 2; }
+
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-mark {
+    width: 42px; height: 42px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 60%);
+}
+.brand-mark::before {
+    content: 'V';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+.brand-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.18em; }
+.brand-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-top: 2px;
+}
+
+.btn {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--line-bright);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: inherit;
+    transition: all 0.15s;
+}
+.btn:hover { background: var(--bg-hover); border-color: var(--accent); }
+.btn.primary {
+    background: linear-gradient(135deg, var(--accent), #0099CC);
+    color: #000;
+    border: none;
+}
+.btn.primary:hover { box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
+.btn.danger { color: #FCA5A5; border-color: rgba(220, 38, 38, 0.4); }
+.btn.danger:hover { background: rgba(220, 38, 38, 0.1); }
+
+/* TOP STATS */
+.top-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+}
+.stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+}
+.stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    line-height: 1;
+}
+.stat-value.green { color: var(--green); }
+.stat-value.red { color: var(--red); }
+.stat-value.gold { color: var(--gold); }
+.stat-value.accent { color: var(--accent); }
+.stat-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* MONTH CARD */
+.month-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+.month-card.collapsed .month-body { display: none; }
+
+.month-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.month-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    flex: 1;
+}
+.month-title:hover .month-name { color: var(--accent); }
+.month-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    transition: color 0.15s;
+}
+.month-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+.month-card.collapsed .month-toggle { transform: rotate(-90deg); }
+
+.month-summary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.month-summary .left-zero { color: var(--green); }
+.month-summary .left-neg { color: var(--red); }
+.month-actions { display: flex; gap: 6px; }
+
+/* WEEK CONFIG */
+.week-config {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.week-config-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+.week-count-input {
+    width: 50px;
+    padding: 5px 8px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-align: center;
+}
+.week-count-input:focus { outline: none; border-color: var(--accent); }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 700px;
+}
+thead th {
+    text-align: left;
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-bottom: 1px solid var(--line);
+    font-weight: 500;
+    white-space: nowrap;
+}
+thead th.center { text-align: center; }
+thead th.right { text-align: right; }
+thead th.week-col {
+    background: rgba(0, 212, 255, 0.04);
+    text-align: center;
+}
+.week-header-date {
+    display: block;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+tbody tr:hover { background: var(--bg-elevated); }
+tbody tr.row-deuda td:first-child {
+    border-left: 3px solid var(--red);
+}
+tbody tr.row-ahorro td:first-child {
+    border-left: 3px solid var(--green);
+}
+tbody tr.row-summary td {
+    border-top: 2px solid var(--line-bright);
+    font-weight: 700;
+    background: var(--bg-elevated);
+    font-family: 'JetBrains Mono', monospace;
+}
+tbody tr.row-summary.left td:first-child {
+    color: var(--text-tertiary);
+}
+tbody tr.row-sobra-libre td {
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.04));
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+tbody tr.row-sobra-libre td:first-child {
+    border-left: 4px solid var(--gold);
+}
+tbody tr.row-sobra-detail td {
+    background: rgba(212, 175, 55, 0.02);
+    font-family: 'JetBrains Mono', monospace;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+tbody tr.row-sobra-detail:first-of-type td {
+    border-top: 1px dashed rgba(212, 175, 55, 0.3);
+}
+tbody tr.settlement-row td {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.05), rgba(255, 107, 157, 0.03));
+    border-top: 1px dashed var(--accent);
+    border-bottom: 1px dashed var(--accent);
+}
+tbody tr.settlement-row td:first-child {
+    border-left: 3px solid var(--accent);
+}
+.settlement-rafa-to-aleja {
+    color: #FFB3CD !important;
+    background: rgba(255, 107, 157, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 107, 157, 0.3);
+}
+.settlement-aleja-to-rafa {
+    color: #FCD34D !important;
+    background: rgba(245, 158, 11, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.settlement-zero {
+    color: var(--text-tertiary);
+}
+tbody tr.row-ingreso-aleja td:first-child {
+    border-left: 3px solid #FF6B9D;
+    color: #FFB3CD;
+}
+tbody tr.row-ingreso-rafa td:first-child {
+    border-left: 3px solid #F59E0B;
+    color: #FCD34D;
+}
+
+.row-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.bank-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+.bank-bofa { color: var(--bofa-color); background: var(--bofa-bg); border-color: var(--bofa-color); }
+.bank-chase { color: var(--chase-color); background: var(--chase-bg); border-color: var(--chase-color); }
+.bank-suncoast { color: var(--suncoast-color); background: var(--suncoast-bg); border-color: var(--suncoast-color); }
+.bank-bprafa { color: var(--bprafa-color); background: var(--bprafa-bg); border-color: var(--bprafa-color); }
+.bank-conjunta { color: var(--conjunta-color); background: var(--conjunta-bg); border-color: var(--conjunta-color); }
+.bank-amex { color: var(--amex-color); background: var(--amex-bg); border-color: var(--amex-color); }
+
+.cell-input {
+    width: 70px;
+    padding: 5px 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+    transition: all 0.1s;
+}
+.cell-input:hover { border-color: var(--line); background: var(--bg-deep); }
+.cell-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg-deep);
+    box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.cell-input.has-value { color: var(--green); }
+.cell-input.has-value-deuda { color: #FCA5A5; }
+.cell-input.has-value-ingreso-aleja { color: #FFB3CD; }
+.cell-input.has-value-ingreso-rafa { color: #FCD34D; }
+
+.row-total {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 13px;
+}
+.row-total.green { color: var(--green); }
+.row-total.red { color: #FCA5A5; }
+.row-total.aleja { color: #FFB3CD; }
+.row-total.rafa { color: #FCD34D; }
+
+.row-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0.3;
+    transition: opacity 0.15s;
+}
+tr:hover .row-actions { opacity: 1; }
+.icon-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+.icon-btn:hover { color: var(--text-primary); border-color: var(--line-bright); }
+.icon-btn.danger:hover { color: var(--red); border-color: var(--red); }
+
+.add-row-buttons {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+.add-row-btn {
+    background: transparent;
+    border: 1px dashed var(--line-bright);
+    color: var(--text-tertiary);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: inherit;
+}
+.add-row-btn:hover { border-color: var(--accent); color: var(--accent); }
+.add-row-btn.deuda:hover { border-color: var(--red); color: #FCA5A5; }
+
+/* TRANSFER SUGGESTION */
+.transfer-suggestion-row {
+    background: rgba(16, 185, 129, 0.04);
+}
+.transfer-suggestion-row td {
+    border-top: 1px dashed rgba(16, 185, 129, 0.3);
+    border-bottom: 1px dashed rgba(16, 185, 129, 0.3);
+}
+.transfer-suggestion-row .row-name {
+    color: var(--green);
+}
+.transfer-suggestion-row .cell-input {
+    color: var(--green);
+}
+.transfer-suggestion-row .cell-input.suggested {
+    color: var(--green);
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* ACCOUNT SUMMARY */
+.account-summary {
+    margin-top: 18px;
+    padding: 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+}
+.account-summary-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+.account-summary-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0;
+    overflow-x: auto;
+}
+.acc-summary-cell {
+    padding: 8px 6px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border-bottom: 1px solid var(--line);
+}
+.acc-summary-cell.header {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+.acc-summary-cell.label {
+    text-align: left;
+    font-weight: 600;
+}
+.acc-summary-cell.value {
+    color: var(--text-primary);
+}
+.acc-summary-cell.value.zero {
+    color: var(--text-tertiary);
+}
+.acc-summary-cell.outflow {
+    color: #FCA5A5;
+}
+.acc-summary-cell.inflow {
+    color: var(--green);
+}
+.acc-summary-cell.net.positive { color: var(--green); font-weight: 700; }
+.acc-summary-cell.net.negative { color: #FCA5A5; font-weight: 700; }
+
+/* DEUDAS PANEL */
+.debts-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+.debts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+.debt-mini {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+}
+.debt-mini.active { border-color: var(--red); }
+.debt-mini.paid { border-color: var(--green); opacity: 0.7; }
+.debt-mini-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+.debt-mini-balance {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--red);
+}
+.debt-mini.paid .debt-mini-balance { color: var(--green); }
+.debt-mini-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+}
+
+/* ADD MONTH */
+.add-month {
+    text-align: center;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px dashed var(--line-bright);
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+
+/* MODAL */
+.modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.modal-bg.open { display: flex; }
+.modal {
+    background: var(--bg-card);
+    border: 1px solid var(--line-bright);
+    border-radius: 14px;
+    padding: 24px;
+    width: 100%;
+    max-width: 460px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.modal h3 {
+    margin: 0 0 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+}
+.modal label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin: 12px 0 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+.modal input, .modal select {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line-bright);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-family: inherit;
+}
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+.modal-divider {
+    border-top: 1px dashed var(--line);
+    margin: 16px 0 0;
+    padding-top: 4px;
+}
+.modal-help {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 1.4;
+}
+.distribution-preview {
+    display: grid;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+}
+.distribution-preview-row {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+}
+.distribution-preview-row strong { color: var(--text-primary); }
+
+.save-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    color: var(--green);
+    padding: 8px 16px;
+    border: 1px solid var(--green);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+}
+.save-indicator.show { opacity: 1; }
+
+/* ACCOUNT FILTER PILLS */
+.account-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 14px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--line);
+}
+.filter-pill {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+.filter-pill:hover {
+    border-color: var(--line-bright);
+    color: var(--text-primary);
+}
+.filter-pill.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.filter-pill .pill-count {
+    opacity: 0.55;
+    font-size: 9px;
+    font-weight: 600;
+}
+.filter-pill.active .pill-count { opacity: 0.85; }
+.filter-pill .pill-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+tbody tr.account-group-header td {
+    padding: 10px 10px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--line);
+    border-bottom: none;
+    background: var(--bg-deep);
+}
+tbody tr.account-group-header td .group-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+tbody tr.account-group-header td .group-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* ACCOUNT FILTER PILLS */
+.account-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 14px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--line);
+}
+.filter-pill {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+.filter-pill:hover {
+    border-color: var(--line-bright);
+    color: var(--text-primary);
+}
+.filter-pill.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.filter-pill .pill-count {
+    opacity: 0.55;
+    font-size: 9px;
+    font-weight: 600;
+}
+.filter-pill.active .pill-count { opacity: 0.85; }
+.filter-pill .pill-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.account-group-header {
+    background: var(--bg-deep) !important;
+}
+.account-group-header td {
+    padding: 10px 10px 6px !important;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--line);
+    border-bottom: none !important;
+}
+.account-group-header td .group-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.account-group-header td .group-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+@media (max-width: 700px) {
+    .container { padding: 12px; }
+    .month-card { padding: 14px; }
+    .month-name { font-size: 18px; }
+    .stat-value { font-size: 22px; }
+    /* font-size >= 16px en mobile para que iOS Safari NO haga zoom automatico al
+       tocar un input. El ancho compensa el tamano visual. */
+    .cell-input { width: 64px; font-size: 16px; padding: 4px 6px; }
+    .week-count-input { font-size: 16px; }
+    .week-header-date { font-size: 11px; }
+    .account-summary-grid {
+        grid-template-columns: 80px repeat(auto-fit, minmax(90px, 1fr)) !important;
+    }
+    .modal input, .modal select { font-size: 16px; }
+    .header { padding: 8px 0 16px; margin-bottom: 16px; }
+    .brand-mark { width: 36px; height: 36px; }
+    .brand-name { font-size: 18px; }
+    .btn { padding: 8px 12px; font-size: 11px; }
+    /* Pills mas legibles en mobile */
+    .filter-pill { font-size: 11px; padding: 7px 11px; }
+}
+
+/* ====================================================================
+   PIN GATE — pantalla inicial de bloqueo
+   ==================================================================== */
+.pin-gate {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-deep);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.pin-gate.hidden { display: none; }
+.pin-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+.pin-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+}
+.pin-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.pin-input {
+    width: 200px;
+    padding: 14px;
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 0.5em;
+    background: var(--bg-card);
+    border: 1px solid var(--line-bright);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+}
+.pin-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.pin-error {
+    color: var(--red);
+    font-size: 13px;
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    min-height: 18px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.pin-error.show { opacity: 1; }
+
+/* ====================================================================
+   SYNC STATUS INDICATOR — esquina inferior izquierda
+   ==================================================================== */
+.sync-status {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--bg-card);
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sync-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+}
+.sync-status.syncing .sync-dot { background: var(--gold); animation: pulse 1s infinite; }
+.sync-status.offline .sync-dot { background: var(--red); }
+.sync-status.error .sync-dot { background: var(--red); }
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* Botón de logout en el header */
+.btn-logout { color: var(--text-tertiary); border-color: var(--line); }
+.btn-logout:hover { color: var(--red); border-color: var(--red); background: transparent; }
+
+</style>
+</head>
+<body>
+
+<!-- PIN GATE: pantalla de bloqueo, se oculta al meter el PIN correcto -->
+<div class="pin-gate" id="pinGate">
+    <div class="pin-brand">VELOCITY</div>
+    <div class="pin-sub">Plan Pareja · A&R</div>
+    <div class="pin-label">Ingresa tu PIN</div>
+    <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4"
+        class="pin-input" id="pinInput" autocomplete="off">
+    <div class="pin-error" id="pinError">PIN incorrecto</div>
+</div>
+
+<!-- Indicador de estado de sincronizacion con Supabase -->
+<div class="sync-status" id="syncStatus" style="display:none;">
+    <span class="sync-dot"></span>
+    <span id="syncStatusText">Conectado</span>
+</div>
+
+<div class="container" id="appContainer" style="display:none;">
+
+    <div class="header">
+        <div class="brand">
+            <div class="brand-mark"></div>
+            <div class="brand-text">
+                <div class="brand-name">VELOCITY</div>
+                <div class="brand-sub">Plan Pareja · A&R</div>
+            </div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn" onclick="exportData()">💾 Respaldo</button>
+            <button class="btn" onclick="importData()">📂 Cargar</button>
+            <button class="btn btn-logout" onclick="logout()" title="Cerrar sesión">🔒</button>
+        </div>
+    </div>
+
+    <div class="top-stats">
+        <div class="stat-card">
+            <div class="stat-label">Deuda total</div>
+            <div class="stat-value red" id="totalDebt">$0</div>
+            <div class="stat-sub" id="debtProgress">0% pagado</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Próxima a atacar</div>
+            <div class="stat-value gold" id="nextDebt">—</div>
+            <div class="stat-sub" id="nextDebtBalance">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Ahorro acumulado</div>
+            <div class="stat-value green" id="totalSavings">$0</div>
+            <div class="stat-sub">Total año</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Meses planeados</div>
+            <div class="stat-value accent" id="monthsCount">0</div>
+            <div class="stat-sub">Click el mes para expandir</div>
+        </div>
+    </div>
+
+    <div class="debts-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.1em;">🎯 Deudas Activas</div>
+            <button class="btn" onclick="addDebt()">+ Deuda</button>
+        </div>
+        <div class="debts-grid" id="debtsGrid"></div>
+    </div>
+
+    <div id="monthsContainer"></div>
+
+    <div class="add-month">
+        <button class="btn primary" onclick="addMonth()">+ Agregar mes</button>
+        <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 8px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em;">
+            COPIA LA ESTRUCTURA DEL ÚLTIMO MES
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 20px 0; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.2em;">
+        VELOCITY · ZERO-BASED · 2026
+    </div>
+
+</div>
+
+<div class="modal-bg" id="modal">
+    <div class="modal">
+        <h3 id="modalTitle">Editar</h3>
+        <div id="modalBody"></div>
+        <div class="modal-actions">
+            <button class="btn" onclick="closeModal()">Cancelar</button>
+            <button class="btn primary" id="modalSaveBtn">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<div class="save-indicator" id="saveIndicator">✓ Guardado</div>
+
+<script>
+// ============================================================
+// CUENTAS
+// ============================================================
+const ACCOUNTS = {
+    "BOFA":     { label: "BOFA",        cls: "bank-bofa",     owner: "aleja" },
+    "Chase":    { label: "Chase",       cls: "bank-chase",    owner: "aleja" },
+    "Suncoast": { label: "Suncoast",    cls: "bank-suncoast", owner: "aleja" },
+    "Amex":     { label: "Amex",        cls: "bank-amex",     owner: "aleja" },
+    "BPRafa":   { label: "BP Rafa",     cls: "bank-bprafa",   owner: "rafa" },
+    "Conjunta": { label: "Conjunta BP", cls: "bank-conjunta", owner: "joint" },
+};
+const ACCOUNT_KEYS = Object.keys(ACCOUNTS);
+
+// Orden de visualizacion (Conjunta primero porque es la cuenta compartida)
+const ACCOUNT_ORDER = ["Conjunta", "BOFA", "Chase", "Suncoast", "Amex", "BPRafa"];
+
+// Derivado de ACCOUNTS.owner para no duplicar la lista en computeMonth
+const ALEJA_ACCOUNTS = ACCOUNT_KEYS.filter(k => ACCOUNTS[k].owner === "aleja");
+const RAFA_ACCOUNTS  = ACCOUNT_KEYS.filter(k => ACCOUNTS[k].owner === "rafa");
+const JOINT_ACCOUNTS = ACCOUNT_KEYS.filter(k => ACCOUNTS[k].owner === "joint");
+
+// Centraliza la obtencion de cuenta de una deuda.
+// Prefiere debt.account (campo explicito), con fallback a string matching
+// para retrocompatibilidad con backups viejos antes de la migracion.
+function getDebtAccount(debt) {
+    if (!debt) return "BOFA";
+    if (debt.account && ACCOUNTS[debt.account]) return debt.account;
+    // Fallback legacy
+    const name = (debt.name || "").toLowerCase();
+    if (name.includes("chase")) return "Chase";
+    if (name.includes("discover")) return "BPRafa";
+    if (name.includes("amex")) return "Amex";
+    if (name.includes("suncoast")) return "Suncoast";
+    return "BOFA";
+}
+
+// ============================================================
+// MODELO
+// ============================================================
+const DEFAULT_DEBTS = [
+    { id: "d-chase",    name: "Chase",    account: "Chase",    balance: 500,      initial: 500,      apr: 0.24, priority: 1 },
+    { id: "d-discover", name: "Discover", account: "BPRafa",   balance: 2215.92,  initial: 2215.92,  apr: 0.26, priority: 2 },
+    { id: "d-amex",     name: "Amex",     account: "Amex",     balance: 4000,     initial: 4000,     apr: 0.27, priority: 3 },
+    { id: "d-suncoast", name: "Suncoast", account: "Suncoast", balance: 13026.70, initial: 13026.70, apr: 0.12, priority: 4 },
+];
+
+const DEFAULT_FIJOS = [
+    { concept: "Renta",                  account: "Conjunta", monthly: 500,  distribution: "byPayDate", payDay: 1 },
+    { concept: "Agua + Luz",             account: "Conjunta", monthly: 200,  distribution: "split4" },
+    { concept: "Comida",                 account: "Conjunta", monthly: 500,  distribution: "split4" },
+    { concept: "Fun money 🎉",            account: "Conjunta", monthly: 200,  distribution: "split4" },
+    { concept: "Gasolina (Rafa)",        account: "Conjunta", monthly: 120,  distribution: "split4" },
+    { concept: "Barbero (Rafa)",         account: "Conjunta", monthly: 160,  distribution: "split4" },
+    { concept: "Tesla (Aleja)",          account: "BOFA",     monthly: 500,  distribution: "split4" },
+    { concept: "Carro Rafa",             account: "BPRafa",   monthly: 745,  distribution: "byPayDate", payDay: 20 },
+    { concept: "Mueblería (Rafa)",       account: "BPRafa",   monthly: 120,  distribution: "byPayDate", payDay: 1 },
+    { concept: "Universidad (Aleja)",    account: "Suncoast", monthly: 700,  distribution: "byPayDate", payDay: 9 },
+    { concept: "Teléfono+Internet+Streaming (Rafa)", account: "BPRafa", monthly: 316, distribution: "split4" },
+    { concept: "Seguro de vida (Aleja)", account: "Chase",    monthly: 200,  distribution: "split4" },
+    { concept: "Seguro auto (Aleja)",    account: "Chase",    monthly: 150,  distribution: "split4" },
+    { concept: "Chimpi",                 account: "Chase",    monthly: 60,   distribution: "split4" },
+    { concept: "Suscripciones",          account: "Chase",    monthly: 30,   distribution: "split4" },
+    { concept: "Personal Aleja",         account: "Chase",    monthly: 100,  distribution: "split4" },
+    { concept: "Ahorro",                 account: "Amex",     monthly: 0,    distribution: "split4", isAhorro: true },
+];
+
+function distribute(monthly, pattern, weeks, payDay = null, weekDates = null) {
+    const arr = new Array(weeks).fill(0);
+    if (!monthly || monthly === 0) return arr;
+    if (pattern === "split4") {
+        const each = monthly / weeks;
+        for (let i = 0; i < weeks; i++) arr[i] = Math.round(each * 100) / 100;
+    } else if (pattern === "byPayDate" && payDay && weekDates) {
+        // Nueva lógica: repartir entre las últimas 2 semanas antes del día de pago
+        const eligibleWeeks = findWeeksForPayDay(weekDates, payDay);
+        if (eligibleWeeks.length === 1) {
+            arr[eligibleWeeks[0]] = monthly;
+        } else if (eligibleWeeks.length >= 2) {
+            // Dividir entre las últimas 2 semanas elegibles
+            const half = monthly / 2;
+            // Para que sume exacto: una mitad redondeada hacia abajo, la otra hacia arriba
+            const firstHalf = Math.round(half * 100) / 100;
+            const secondHalf = Math.round((monthly - firstHalf) * 100) / 100;
+            arr[eligibleWeeks[0]] = firstHalf;
+            arr[eligibleWeeks[1]] = secondHalf;
+        }
+    } else if (pattern.startsWith("week")) {
+        const w = parseInt(pattern.replace("week", "")) - 1;
+        if (w >= 0 && w < weeks) arr[w] = monthly;
+    }
+    return arr;
+}
+
+// Parsear "Mayo 2026" → { year, monthIdx }
+function parseMonthLabel(monthLabel) {
+    const meses = {
+        "enero": 0, "febrero": 1, "marzo": 2, "abril": 3, "mayo": 4, "junio": 5,
+        "julio": 6, "agosto": 7, "septiembre": 8, "octubre": 9, "noviembre": 10, "diciembre": 11
+    };
+    const parts = monthLabel.toLowerCase().trim().split(/\s+/);
+    if (parts.length < 2) return null;
+    const mesNombre = parts[0];
+    const year = parseInt(parts[1]);
+    if (isNaN(year) || meses[mesNombre] === undefined) return null;
+    return { year, monthIdx: meses[mesNombre] };
+}
+
+// Devuelve fechas de inicio de cada semana (viernes por default).
+// Considera month.startDate (formato "M/D") si existe, si no busca el primer viernes del mes.
+function getWeekDates(month) {
+    const parsed = parseMonthLabel(month.label);
+    if (!parsed) return null;
+    const { year, monthIdx } = parsed;
+
+    // Determinar fecha del primer viernes (S1)
+    let startDay;
+    if (month.startDate) {
+        // Usuario configuró inicio del mes (formato "M/D")
+        const parts = month.startDate.split("/");
+        if (parts.length === 2) {
+            startDay = parseInt(parts[1]);
+        }
+    }
+    if (!startDay) {
+        // Buscar primer viernes del mes
+        const date = new Date(year, monthIdx, 1);
+        while (date.getDay() !== 5) date.setDate(date.getDate() + 1);
+        startDay = date.getDate();
+    }
+
+    const dates = [];
+    for (let w = 0; w < month.weeks; w++) {
+        const date = new Date(year, monthIdx, startDay + (w * 7));
+        dates.push({
+            label: `${date.getMonth() + 1}/${date.getDate()}`,
+            day: date.getDate(),
+            month: date.getMonth(),
+            year: date.getFullYear(),
+            // Rango de la semana: del viernes hasta el jueves siguiente
+            rangeStart: new Date(date),
+            rangeEnd: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 6),
+        });
+    }
+    return dates;
+}
+
+// Backward compat: devuelve array de strings "M/D"
+function getFridaysOfMonth(monthLabel) {
+    return getWeekDates({ label: monthLabel, weeks: 5 }).slice(0, 5).map(d => d.label);
+}
+
+// Decide en qué semana cae un día del mes
+// Antiguo: devolvía 1 sola semana. Ahora: devuelve array de índices de las
+// últimas hasta 2 semanas que llegan ANTES del día de pago, para repartir el monto.
+// Lógica:
+//   - Si el día de pago es ≤ S1.day → todo en S1
+//   - Si solo 1 semana llega antes del día → todo en esa semana
+//   - Si 2+ semanas llegan antes del día → repartir entre las últimas 2
+function findWeeksForPayDay(weekDates, payDay) {
+    if (!weekDates || !payDay) return [];
+
+    // Encontrar las semanas cuyo día (viernes) es <= payDay (en el mismo mes de referencia)
+    // weekDates[i] tiene { day, month } — usamos el mes de referencia para filtrar.
+    const refMonth = weekDates[0] ? weekDates[0].month : null;
+
+    const eligibleWeeks = [];
+    for (let w = 0; w < weekDates.length; w++) {
+        const wd = weekDates[w];
+        // La semana es elegible si su viernes está en el mismo mes y es <= payDay
+        if (wd.month === refMonth && wd.day <= payDay) {
+            eligibleWeeks.push(w);
+        }
+    }
+
+    // Si ninguna semana elegible (ej: día de pago antes del primer viernes), poner en S1
+    if (eligibleWeeks.length === 0) return [0];
+
+    // Tomar las últimas 2 (o menos)
+    return eligibleWeeks.slice(-2);
+}
+
+// Backward compat (devuelve solo el índice de la última semana elegible)
+function findWeekForPayDay(weekDates, payDay) {
+    const weeks = findWeeksForPayDay(weekDates, payDay);
+    return weeks.length > 0 ? weeks[weeks.length - 1] : 0;
+}
+
+function emptyMonth(label, copyFromMonth = null) {
+    if (copyFromMonth) {
+        const weeks = copyFromMonth.weeks;
+        const startDate = copyFromMonth.startDate || null;
+        const tempMonth = { label, weeks, startDate };
+        const weekDates = getWeekDates(tempMonth);
+        return {
+            id: "m-" + Date.now(),
+            label,
+            weeks,
+            startDate,
+            collapsed: false,
+            fijos: copyFromMonth.fijos.map(r => ({
+                id: "r-" + Math.random().toString(36).slice(2),
+                concept: r.concept,
+                account: r.account,
+                monthly: r.monthly,
+                distribution: r.distribution,
+                payDay: r.payDay || null,
+                isAhorro: r.isAhorro || false,
+                values: distribute(r.monthly, r.distribution, weeks, r.payDay, weekDates),
+            })),
+            deudas: copyFromMonth.deudas.map(r => ({
+                id: "d-" + Math.random().toString(36).slice(2),
+                debtId: r.debtId || null,
+                concept: r.concept,
+                values: new Array(weeks).fill(0),
+            })),
+            ingresoAleja: new Array(weeks).fill(0),
+            ingresoRafa: new Array(weeks).fill(0),
+            // transferAleja/Rafa[w]: null = usar sugerencia automatica (calculada en computeMonth);
+            //                        numero >= 0 = el usuario lo fijo manualmente esa semana
+            transferAleja: new Array(weeks).fill(null),
+            transferRafa: new Array(weeks).fill(null),
+        };
+    }
+    const weeks = 4;
+    const tempMonth = { label, weeks, startDate: null };
+    const weekDates = getWeekDates(tempMonth);
+    return {
+        id: "m-" + Date.now(),
+        label,
+        weeks,
+        startDate: null,
+        collapsed: false,
+        fijos: DEFAULT_FIJOS.map(r => ({
+            id: "r-" + Math.random().toString(36).slice(2),
+            concept: r.concept,
+            account: r.account,
+            monthly: r.monthly,
+            distribution: r.distribution,
+            payDay: r.payDay || null,
+            isAhorro: r.isAhorro || false,
+            values: distribute(r.monthly, r.distribution, weeks, r.payDay, weekDates),
+        })),
+        deudas: [],
+        ingresoAleja: new Array(weeks).fill(0),
+        ingresoRafa: new Array(weeks).fill(0),
+        // transferAleja/Rafa[w]: null = usar sugerencia automatica (calculada en computeMonth);
+        //                        numero >= 0 = el usuario lo fijo manualmente esa semana
+        transferAleja: new Array(weeks).fill(null),
+        transferRafa: new Array(weeks).fill(null),
+    };
+}
+
+let state = {
+    months: [],
+    debts: JSON.parse(JSON.stringify(DEFAULT_DEBTS)),
+};
+
+// ============================================================
+// SUPABASE — config y cliente
+// ============================================================
+const SUPABASE_URL = "https://xhtzixlmpohvnujyhsnn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_SPsuT65u7QxJGDR_NCbcqg_4ETDqZev";
+const PIN_HASH = "0504"; // PIN compartido. Validacion client-side; el gate real
+                        // es que la URL del sitio no se publique. Para casa esta bien.
+const PIN_CACHE_KEY = "velocity_pin_ok"; // marca de "ya pase el PIN en este browser"
+const LOCAL_BACKUP_KEY = "velocity_local_backup"; // backup local por si Supabase falla
+
+let supabase = null;
+let isApplyingRemoteUpdate = false; // true mientras aplicamos un cambio recibido de
+                                     // realtime; evita un loop infinito save->update->save
+let saveDebounceTimer = null;
+let saveInFlight = false;
+let pendingSave = false;
+
+function initSupabase() {
+    if (supabase) return supabase;
+    if (!window.__supabaseCreateClient) {
+        console.error("Supabase SDK no cargo");
+        return null;
+    }
+    supabase = window.__supabaseCreateClient(SUPABASE_URL, SUPABASE_KEY, {
+        realtime: { params: { eventsPerSecond: 5 } }
+    });
+    return supabase;
+}
+
+function setSyncStatus(state, text) {
+    // state: "ok" | "syncing" | "offline" | "error"
+    const el = document.getElementById("syncStatus");
+    if (!el) return;
+    el.style.display = "flex";
+    el.classList.remove("syncing", "offline", "error");
+    if (state !== "ok") el.classList.add(state);
+    const labels = {
+        ok: "Conectado",
+        syncing: "Guardando…",
+        offline: "Sin conexión",
+        error: "Error de sync",
+    };
+    document.getElementById("syncStatusText").textContent = text || labels[state] || "";
+}
+
+// ============================================================
+// PIN GATE
+// ============================================================
+function setupPinGate() {
+    const gate = document.getElementById("pinGate");
+    const input = document.getElementById("pinInput");
+    const errEl = document.getElementById("pinError");
+
+    // Si el PIN ya fue validado antes en este browser, saltar el gate
+    if (localStorage.getItem(PIN_CACHE_KEY) === "1") {
+        gate.classList.add("hidden");
+        bootApp();
+        return;
+    }
+
+    setTimeout(() => input.focus(), 100);
+    input.addEventListener("input", () => {
+        errEl.classList.remove("show");
+        if (input.value.length === 4) {
+            if (input.value === PIN_HASH) {
+                localStorage.setItem(PIN_CACHE_KEY, "1");
+                gate.classList.add("hidden");
+                bootApp();
+            } else {
+                errEl.classList.add("show");
+                input.value = "";
+                // Vibracion en mobile como feedback
+                if (navigator.vibrate) navigator.vibrate(150);
+            }
+        }
+    });
+}
+
+function logout() {
+    if (!confirm("¿Cerrar sesión? Tendrás que ingresar el PIN de nuevo.")) return;
+    localStorage.removeItem(PIN_CACHE_KEY);
+    location.reload();
+}
+
+// ============================================================
+// CARGAR/GUARDAR ESTADO desde Supabase
+// ============================================================
+async function load() {
+    setSyncStatus("syncing", "Cargando…");
+    const sb = initSupabase();
+    if (!sb) {
+        // Sin Supabase, usar backup local si existe
+        loadFromLocalBackup();
+        return;
+    }
+    try {
+        const { data, error } = await sb
+            .from("velocity_state")
+            .select("state")
+            .eq("id", 1)
+            .single();
+        if (error) throw error;
+
+        if (data && data.state && data.state.months && Array.isArray(data.state.months) && data.state.months.length > 0) {
+            state = data.state;
+            migrateState();
+        } else {
+            // Primera vez: la tabla esta vacia. Inicializar y guardar.
+            initFresh();
+            await save(true);
+        }
+
+        // Backup local para offline fallback
+        try { localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(state)); } catch (e) {}
+
+        setSyncStatus("ok");
+        subscribeToRealtime();
+    } catch (e) {
+        console.error("Error cargando de Supabase:", e);
+        setSyncStatus("error", "Modo offline");
+        loadFromLocalBackup();
+    }
+}
+
+function loadFromLocalBackup() {
+    try {
+        const raw = localStorage.getItem(LOCAL_BACKUP_KEY);
+        if (raw) {
+            state = JSON.parse(raw);
+            migrateState();
+        } else {
+            initFresh();
+        }
+    } catch (e) {
+        console.error(e);
+        initFresh();
+    }
+}
+
+// Migra state al schema actual de forma idempotente.
+function migrateState() {
+    let migrated = false;
+
+    (state.debts || []).forEach(d => {
+        if (!d.account || !ACCOUNTS[d.account]) {
+            d.account = getDebtAccount(d);
+            migrated = true;
+        }
+    });
+
+    (state.months || []).forEach(m => {
+        (m.fijos || []).forEach(r => {
+            if (r.isAhorro === undefined) {
+                r.isAhorro = (r.concept || "").toLowerCase().includes("ahorro");
+                migrated = true;
+            }
+        });
+    });
+
+    (state.debts || []).forEach(d => {
+        if (d.initial === undefined || d.initial === null) {
+            d.initial = d.balance || 0;
+            migrated = true;
+        }
+        const paid = getDebtTotalPaid(d.id);
+        const computed = Math.max(0, (d.initial || 0) - paid);
+        if (Math.abs(computed - (d.balance || 0)) > 0.5) {
+            d.initial = (d.balance || 0) + paid;
+            migrated = true;
+        }
+    });
+
+    if (migrated) save();
+}
+
+function initFresh() {
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const now = new Date();
+    const label = `${meses[now.getMonth()]} ${now.getFullYear()}`;
+    state.months.push(emptyMonth(label));
+}
+
+// save() es debounced: si tipeas rapido, agrupa varias modificaciones en 1 escritura.
+// "immediate" = true bypassea el debounce (usado en boot y al recibir realtime).
+function save(immediate = false) {
+    // No guardar si estamos aplicando un cambio recibido por realtime — eso causaria loop
+    if (isApplyingRemoteUpdate) return;
+
+    // Backup local siempre (offline safety)
+    try { localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(state)); } catch (e) {}
+
+    showSaveIndicator();
+
+    if (immediate) {
+        return doSaveToSupabase();
+    }
+
+    clearTimeout(saveDebounceTimer);
+    saveDebounceTimer = setTimeout(doSaveToSupabase, 400);
+}
+
+async function doSaveToSupabase() {
+    if (saveInFlight) {
+        pendingSave = true;
+        return;
+    }
+    saveInFlight = true;
+    setSyncStatus("syncing");
+    try {
+        const sb = initSupabase();
+        if (!sb) throw new Error("No client");
+        const { error } = await sb
+            .from("velocity_state")
+            .update({ state: state, updated_at: new Date().toISOString() })
+            .eq("id", 1);
+        if (error) throw error;
+        setSyncStatus("ok");
+    } catch (e) {
+        console.error("Error guardando:", e);
+        setSyncStatus("error", "Reintentando…");
+        // Reintentar en 3 segundos
+        setTimeout(() => doSaveToSupabase(), 3000);
+    } finally {
+        saveInFlight = false;
+        if (pendingSave) {
+            pendingSave = false;
+            doSaveToSupabase();
+        }
+    }
+}
+
+// ============================================================
+// REALTIME — escuchar cambios del otro lado
+// ============================================================
+let realtimeChannel = null;
+function subscribeToRealtime() {
+    const sb = initSupabase();
+    if (!sb) return;
+    if (realtimeChannel) sb.removeChannel(realtimeChannel);
+
+    realtimeChannel = sb
+        .channel("velocity_state_changes")
+        .on("postgres_changes", {
+            event: "UPDATE",
+            schema: "public",
+            table: "velocity_state",
+            filter: "id=eq.1"
+        }, (payload) => {
+            // Si el usuario tiene un input enfocado, no refrescamos para no
+            // pisarle lo que esta escribiendo. Le aplicamos despues del blur.
+            const active = document.activeElement;
+            const isEditing = active && (active.tagName === "INPUT" || active.tagName === "SELECT");
+            if (isEditing) {
+                // Diferir hasta que termine de editar
+                active.addEventListener("blur", () => applyRemoteState(payload.new.state), { once: true });
+                return;
+            }
+            applyRemoteState(payload.new.state);
+        })
+        .subscribe();
+}
+
+function applyRemoteState(newState) {
+    if (!newState) return;
+    // Si es identico al que ya tenemos, no hacer nada
+    if (JSON.stringify(newState) === JSON.stringify(state)) return;
+    isApplyingRemoteUpdate = true;
+    try {
+        state = newState;
+        migrateState();
+        render();
+    } finally {
+        isApplyingRemoteUpdate = false;
+    }
+}
+
+function showSaveIndicator() {
+    const el = document.getElementById("saveIndicator");
+    if (!el) return;
+    el.classList.add("show");
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => el.classList.remove("show"), 1200);
+}
+
+function fmtMoney(n) {
+    if (typeof n !== "number" || isNaN(n)) n = 0;
+    const sign = n < 0 ? "-" : "";
+    return sign + "$" + Math.abs(Math.round(n)).toLocaleString("en-US");
+}
+
+function sumArr(arr) { return arr.reduce((a, b) => a + (parseFloat(b) || 0), 0); }
+
+// ============================================================
+// CÁLCULOS
+// ============================================================
+function computeMonth(month) {
+    const totalFijos = month.fijos.reduce((s, r) => s + sumArr(r.values), 0);
+    const totalDeudas = month.deudas.reduce((s, r) => s + sumArr(r.values), 0);
+    const totalGastos = totalFijos + totalDeudas;
+    const totalIngresoAleja = sumArr(month.ingresoAleja);
+    const totalIngresoRafa = sumArr(month.ingresoRafa);
+    const totalIngreso = totalIngresoAleja + totalIngresoRafa;
+    const left = totalIngreso - totalGastos;
+
+    // Por semana
+    const perWeek = [];
+    for (let w = 0; w < month.weeks; w++) {
+        const fijoW = month.fijos.reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+        const deudaW = month.deudas.reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+        const ingAlejaW = parseFloat(month.ingresoAleja[w]) || 0;
+        const ingRafaW = parseFloat(month.ingresoRafa[w]) || 0;
+        const ingW = ingAlejaW + ingRafaW;
+
+        // Calcular gastos Conjunta de esta semana
+        const conjuntaW = month.fijos
+            .filter(r => r.account === "Conjunta")
+            .reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+
+        // Gastos personales por dueño — derivados de ACCOUNTS.owner
+        const gastosAlejaW = month.fijos
+            .filter(r => ALEJA_ACCOUNTS.includes(r.account))
+            .reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+        const gastosRafaW = month.fijos
+            .filter(r => RAFA_ACCOUNTS.includes(r.account))
+            .reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+
+        // Aporte a Conjunta proporcional al ingreso de cada uno ESA SEMANA.
+        // Si Aleja cobro 500 y Rafa 700, Aleja aporta 41.7% del Conjunta semanal.
+        let sugAleja = 0, sugRafa = 0;
+        if (ingW > 0 && conjuntaW > 0) {
+            const ratioAleja = ingAlejaW / ingW;
+            sugAleja = Math.round(conjuntaW * ratioAleja * 100) / 100;
+            sugRafa = Math.round((conjuntaW - sugAleja) * 100) / 100;
+        }
+
+        // ============================================================
+        // AJUSTE POR DEFICIT: si despues del aporte proporcional uno queda
+        // negativo y el otro tiene sobra, mover el faltante del lado corto
+        // al lado que sobra. El total aportado a Conjunta NO cambia
+        // (sigue siendo conjuntaW); solo se redistribuye entre los dos.
+        // ============================================================
+        let preSobraAleja = ingAlejaW - gastosAlejaW - sugAleja;
+        let preSobraRafa = ingRafaW - gastosRafaW - sugRafa;
+
+        if (preSobraAleja < 0 && preSobraRafa > 0) {
+            // Aleja falta. Rafa puede absorber hasta su propia sobra,
+            // PERO sugAleja no puede bajar de 0 (no se "aporta negativo").
+            const transferMax = Math.min(-preSobraAleja, preSobraRafa, sugAleja);
+            sugAleja -= transferMax;
+            sugRafa += transferMax;
+        } else if (preSobraRafa < 0 && preSobraAleja > 0) {
+            // Rafa falta. Aleja absorbe hasta donde alcance sin bajar sugRafa de 0.
+            const transferMax = Math.min(-preSobraRafa, preSobraAleja, sugRafa);
+            sugRafa -= transferMax;
+            sugAleja += transferMax;
+        }
+        // Si ambos en deficit, no hay nada que hacer (no hay sobra de donde mover).
+        // Si uno cobro 0, su aporte ya es 0 (proporcional), asi que el "transferMax"
+        // queda en 0 y el aporte total queda intacto. El gasto personal del que
+        // no cobro se reflejara como sobra personal negativa, lo cual es real.
+        sugAleja = Math.round(sugAleja * 100) / 100;
+        sugRafa = Math.round(sugRafa * 100) / 100;
+
+        // Manual override (el usuario puede pisar la sugerencia)
+        const realAleja = month.transferAleja[w] !== null && month.transferAleja[w] !== undefined
+            ? parseFloat(month.transferAleja[w]) || 0 : sugAleja;
+        const realRafa = month.transferRafa[w] !== null && month.transferRafa[w] !== undefined
+            ? parseFloat(month.transferRafa[w]) || 0 : sugRafa;
+
+        // ============================================================
+        // SOBRA POR PERSONA (sin atribuir deudas a nadie individual)
+        // ============================================================
+        // Modelo:
+        //   - Aleja cobra, paga sus gastos personales y aporta a Conjunta
+        //   - Igual Rafa
+        //   - Las deudas se pagan del pool conjunto al final (sobra libre total)
+        //   - El aporte a Conjunta se redistribuye si uno queda corto y el otro
+        //     tiene sobra (regla acordada con Aleja)
+        // ============================================================
+
+        // Total de pagos a deuda esa semana (no se atribuye a nadie en particular,
+        // sale del pool conjunto)
+        const deudasW = month.deudas
+            .reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+
+        // Sobra personal: lo que le queda a cada uno despues de sus gastos + aporte conjunta
+        const sobraAlejaPersonal = ingAlejaW - gastosAlejaW - realAleja;
+        const sobraRafaPersonal = ingRafaW - gastosRafaW - realRafa;
+
+        // Sobra libre total: pool conjunto despues de pagar deudas esa semana
+        const sobraLibreTotal = sobraAlejaPersonal + sobraRafaPersonal - deudasW;
+
+        perWeek.push({
+            total: fijoW + deudaW,
+            ingreso: ingW,
+            ingresoAleja: ingAlejaW,
+            ingresoRafa: ingRafaW,
+            left: ingW - fijoW - deudaW,
+            conjunta: conjuntaW,
+            sugAleja, sugRafa,
+            realAleja, realRafa,
+            gastosAlejaW, gastosRafaW,
+            deudasW,
+            sobraAlejaPersonal,
+            sobraRafaPersonal,
+            sobraLibreTotal,
+        });
+    }
+
+    // Detecta la fila de ahorro: prefiere el flag isAhorro, con fallback a string match (legacy)
+    const ahorroRow = month.fijos.find(r => r.isAhorro)
+        || month.fijos.find(r => (r.concept || "").toLowerCase().includes("ahorro"));
+    const monthSavings = ahorroRow ? sumArr(ahorroRow.values) : 0;
+
+    return { totalFijos, totalDeudas, totalGastos, totalIngreso, totalIngresoAleja, totalIngresoRafa, left, perWeek, monthSavings };
+}
+
+// Calcular flujo por cuenta para una semana
+function computeAccountFlowForWeek(month, w, computed) {
+    const flows = {};
+    ACCOUNT_KEYS.forEach(k => { flows[k] = { in: 0, out: 0, net: 0 }; });
+
+    // Ingresos: Aleja → BOFA, Rafa → BPRafa (asumimos)
+    flows.BOFA.in += parseFloat(month.ingresoAleja[w]) || 0;
+    flows.BPRafa.in += parseFloat(month.ingresoRafa[w]) || 0;
+
+    // Salidas: cada gasto sale de su cuenta
+    month.fijos.forEach(r => {
+        const v = parseFloat(r.values[w]) || 0;
+        if (v > 0 && flows[r.account]) flows[r.account].out += v;
+    });
+    month.deudas.forEach(r => {
+        const v = parseFloat(r.values[w]) || 0;
+        if (v > 0) {
+            // Para pago a deuda: el dinero sale de... bueno, de donde sea. Lo ponemos como gasto general.
+            // Por ahora asumimos que si la deuda tiene "balance", sale de BOFA (cuenta principal Aleja)
+            // En el futuro podríamos preguntar de qué cuenta sale
+            flows.BOFA.out += v;
+        }
+    });
+
+    // Transferencias Aleja → Conjunta (sale de BOFA, entra a Conjunta)
+    const realAleja = computed.perWeek[w].realAleja;
+    const realRafa = computed.perWeek[w].realRafa;
+    if (realAleja > 0) {
+        flows.BOFA.out += realAleja;
+        flows.Conjunta.in += realAleja;
+    }
+    if (realRafa > 0) {
+        flows.BPRafa.out += realRafa;
+        flows.Conjunta.in += realRafa;
+    }
+
+    // Net
+    Object.keys(flows).forEach(k => {
+        flows[k].net = flows[k].in - flows[k].out;
+    });
+
+    return flows;
+}
+
+// ============================================================
+// DEUDAS AUTO-GESTIONADAS
+// ============================================================
+// Modelo: las filas de pago a deuda aparecen automaticamente en cada mes para
+// cada deuda activa. El balance de cada deuda se computa desde initial - sum(pagos)
+// a traves de todos los meses. El usuario solo escribe montos en celdas.
+
+function getDebtTotalPaid(debtId) {
+    let total = 0;
+    (state.months || []).forEach(m => {
+        (m.deudas || []).forEach(r => {
+            if (r.debtId === debtId) {
+                total += (r.values || []).reduce((s, v) => s + (parseFloat(v) || 0), 0);
+            }
+        });
+    });
+    return total;
+}
+
+function recomputeDebtBalances() {
+    state.debts.forEach(d => {
+        if (d.initial === undefined || d.initial === null) d.initial = d.balance || 0;
+        const paid = getDebtTotalPaid(d.id);
+        // Balance no baja de 0. Si el usuario "sobrepaga" en celdas, la diferencia
+        // se queda visible en las celdas (paid > initial) pero balance se reporta como 0.
+        d.balance = Math.max(0, d.initial - paid);
+    });
+}
+
+function syncMonthDeudas(month) {
+    const activeDebts = state.debts.filter(d => d.balance > 0.01);
+    const activeDebtIds = new Set(activeDebts.map(d => d.id));
+
+    // Crear filas para deudas activas que aun no tienen una en este mes
+    activeDebts.forEach(debt => {
+        if (!month.deudas.find(r => r.debtId === debt.id)) {
+            month.deudas.push({
+                id: "d-" + Math.random().toString(36).slice(2),
+                debtId: debt.id,
+                concept: "",
+                values: new Array(month.weeks).fill(0),
+            });
+        }
+    });
+
+    // Eliminar filas si:
+    //   - su deuda fue borrada del state global
+    //   - su deuda ya esta saldada Y la fila no tiene ningun pago registrado este mes
+    //     (si tiene pagos, la dejamos como registro historico de cuando se saldo)
+    month.deudas = month.deudas.filter(r => {
+        const debt = state.debts.find(d => d.id === r.debtId);
+        if (!debt) return false;
+        if (activeDebtIds.has(debt.id)) return true;
+        return (r.values || []).some(v => v > 0);
+    });
+
+    // Ordenar por prioridad de la deuda para que el orden sea consistente
+    month.deudas.sort((a, b) => {
+        const da = state.debts.find(d => d.id === a.debtId);
+        const db = state.debts.find(d => d.id === b.debtId);
+        return (da ? da.priority : 999) - (db ? db.priority : 999);
+    });
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+    // Recomputar balances de deudas y sincronizar filas en todos los meses ANTES de renderizar
+    recomputeDebtBalances();
+    state.months.forEach(m => syncMonthDeudas(m));
+
+    // Preservar posicion de scroll: render() reconstruye monthsContainer entero
+    // y sin esto la pagina salta al top cuando editas una celda con scroll abajo
+    const prevScrollY = window.scrollY;
+
+    const totalDebtRemaining = state.debts.reduce((s, d) => s + d.balance, 0);
+    const totalDebtInitial = state.debts.reduce((s, d) => s + d.initial, 0);
+    const debtProgressPct = totalDebtInitial > 0 ? Math.round((1 - totalDebtRemaining / totalDebtInitial) * 100) : 0;
+
+    document.getElementById("totalDebt").textContent = fmtMoney(totalDebtRemaining);
+    document.getElementById("debtProgress").textContent = `${debtProgressPct}% pagado`;
+
+    const activeDebt = state.debts.filter(d => d.balance > 0.01).sort((a, b) => a.priority - b.priority)[0];
+    if (activeDebt) {
+        document.getElementById("nextDebt").textContent = activeDebt.name.toUpperCase();
+        document.getElementById("nextDebtBalance").textContent = fmtMoney(activeDebt.balance);
+    } else {
+        document.getElementById("nextDebt").textContent = "🏁 LIBRE";
+        document.getElementById("nextDebtBalance").textContent = "Sin deudas";
+    }
+
+    const totalSavings = state.months.reduce((s, m) => s + computeMonth(m).monthSavings, 0);
+    document.getElementById("totalSavings").textContent = fmtMoney(totalSavings);
+    document.getElementById("monthsCount").textContent = state.months.length;
+
+    renderDebts();
+
+    const container = document.getElementById("monthsContainer");
+    container.innerHTML = "";
+    state.months.forEach(month => {
+        container.appendChild(renderMonth(month));
+    });
+
+    // Restaurar scroll (despues de que el DOM se asiente)
+    window.scrollTo(0, prevScrollY);
+}
+
+function renderDebts() {
+    const grid = document.getElementById("debtsGrid");
+    grid.innerHTML = "";
+    const sorted = [...state.debts].sort((a, b) => a.priority - b.priority);
+    const firstActive = sorted.find(d => d.balance > 0.01);
+
+    sorted.forEach(debt => {
+        const isActive = debt === firstActive;
+        const isPaid = debt.balance < 0.01;
+        const cls = isPaid ? "paid" : (isActive ? "active" : "");
+        const accKey = getDebtAccount(debt);
+        const acc = ACCOUNTS[accKey] || ACCOUNTS["BOFA"];
+        grid.innerHTML += `
+            <div class="debt-mini ${cls}">
+                <div class="debt-mini-name">
+                    ${debt.name}
+                    <span class="bank-badge ${acc.cls}" style="margin-left: 6px; font-size: 9px;">${acc.label}</span>
+                </div>
+                <div class="debt-mini-balance">${fmtMoney(debt.balance)}</div>
+                <div class="debt-mini-meta">APR ${(debt.apr * 100).toFixed(0)}%${isActive ? ' · OBJETIVO' : ''}${isPaid ? ' · ✓ PAGADA' : ''}</div>
+                <div style="display: flex; gap: 4px; margin-top: 8px;">
+                    <button class="icon-btn" style="flex:1;" onclick="updateDebt('${debt.id}')">Actualizar</button>
+                    <button class="icon-btn" onclick="editDebtDetails('${debt.id}')" title="Editar nombre/cuenta/APR/prioridad">✎</button>
+                    <button class="icon-btn danger" onclick="deleteDebt('${debt.id}')">×</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function renderMonth(month) {
+    const div = document.createElement("div");
+    div.className = "month-card" + (month.collapsed ? " collapsed" : "");
+
+    const computed = computeMonth(month);
+    const leftClass = Math.abs(computed.left) < 1 ? "left-zero" : "left-neg";
+    const weekDatesObjs = getWeekDates(month);
+    const fridays = weekDatesObjs ? weekDatesObjs.map(d => d.label) : null;
+
+    const header = `
+        <div class="month-header">
+            <div class="month-title" onclick="toggleMonth('${month.id}')">
+                <span class="month-toggle">▼</span>
+                <span class="month-name">${month.label}</span>
+            </div>
+            <div class="month-summary">
+                <span>Aleja ${fmtMoney(computed.totalIngresoAleja)}</span>
+                <span>Rafa ${fmtMoney(computed.totalIngresoRafa)}</span>
+                <span>Gastos ${fmtMoney(computed.totalGastos)}</span>
+                <span class="${leftClass}">SOBRA ${fmtMoney(computed.left)}</span>
+            </div>
+            <div class="month-actions">
+                <button class="icon-btn" onclick="renameMonth('${month.id}')" title="Renombrar">✎</button>
+                <button class="icon-btn danger" onclick="deleteMonth('${month.id}')" title="Borrar mes">×</button>
+            </div>
+        </div>
+    `;
+
+    const weekConfig = `
+        <div class="week-config">
+            <span class="week-config-label">Semanas:</span>
+            <input type="number" class="week-count-input" min="3" max="6" value="${month.weeks}"
+                onchange="updateWeekCount('${month.id}', this.value)">
+            <span class="week-config-label" style="margin-left: 12px;">Inicio S1:</span>
+            <button class="icon-btn" onclick="editStartDate('${month.id}')" title="Cambiar fecha inicio S1" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 5px 10px;">
+                ${fridays && fridays[0] ? fridays[0] : '—'}  ✎
+            </button>
+            <span class="week-config-label" style="margin-left: auto;">${computed.totalIngreso > 0 ? (computed.left >= 0 ? '🎯 Sobra ' + fmtMoney(computed.left) + ' libre para deuda/ahorro' : '⚠️ Faltan ' + fmtMoney(Math.abs(computed.left))) : 'Sin ingreso registrado'}</span>
+        </div>
+    `;
+
+    let weekHeaders = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const fridayDate = fridays && fridays[w] ? fridays[w] : "";
+        weekHeaders += `<th class="week-col">S${w + 1}${fridayDate ? `<span class="week-header-date">${fridayDate}</span>` : ''}</th>`;
+    }
+
+    // ============================================================
+    // FILTRO/SORT POR CUENTA
+    // ============================================================
+    const currentFilter = month.accountFilter || "all";
+
+    // Contar filas de FIJOS por cuenta para los pills
+    // (las deudas tienen su propia seccion al final, no se cuentan aqui)
+    const accountCounts = {};
+    ACCOUNT_ORDER.forEach(k => accountCounts[k] = 0);
+    month.fijos.forEach(r => {
+        if (accountCounts[r.account] !== undefined) accountCounts[r.account]++;
+    });
+    const totalRowCount = month.fijos.length;
+
+    // Construir pills (solo cuentas con filas + "Todas")
+    let filterPills = `<button class="filter-pill ${currentFilter === 'all' ? 'active' : ''}" onclick="setAccountFilter('${month.id}', 'all')">Todas <span class="pill-count">${totalRowCount}</span></button>`;
+    ACCOUNT_ORDER.forEach(k => {
+        if (accountCounts[k] === 0) return;
+        const acc = ACCOUNTS[k];
+        const isActive = currentFilter === k;
+        filterPills += `<button class="filter-pill ${isActive ? 'active' : ''}" onclick="setAccountFilter('${month.id}', '${k}')"><span class="pill-dot" style="background: var(--${k.toLowerCase()}-color);"></span>${acc.label} <span class="pill-count">${accountCounts[k]}</span></button>`;
+    });
+    const filterBar = `<div class="account-filter">${filterPills}</div>`;
+
+    // Helper: renderiza una fila de fijo
+    function renderFijoRow(row) {
+        const total = sumArr(row.values);
+        const acc = ACCOUNTS[row.account] || ACCOUNTS["BOFA"];
+        let cells = "";
+        for (let w = 0; w < month.weeks; w++) {
+            const v = row.values[w] || 0;
+            cells += `<td class="center"><input type="number" class="cell-input ${v > 0 ? 'has-value' : ''}"
+                value="${v > 0 ? v : ''}" placeholder="0"
+                onchange="updateCell('${month.id}', 'fijos', '${row.id}', ${w}, this.value)"></td>`;
+        }
+        const isAhorro = !!row.isAhorro || (row.concept || "").toLowerCase().includes("ahorro");
+        const rowClass = isAhorro ? "row-ahorro" : "";
+        const payDayBadge = row.payDay
+            ? `<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">📅 día ${row.payDay}</span>`
+            : '';
+        return `
+            <tr class="${rowClass}">
+                <td>
+                    <div class="row-name">
+                        ${row.concept}
+                        <span class="bank-badge ${acc.cls}">${acc.label}</span>
+                        ${payDayBadge}
+                    </div>
+                </td>
+                ${cells}
+                <td class="right"><span class="row-total ${isAhorro ? 'green' : ''}">${fmtMoney(total)}</span></td>
+                <td>
+                    <div class="row-actions">
+                        <button class="icon-btn" onclick="editFijoRow('${month.id}', '${row.id}')" title="Editar">✎</button>
+                        <button class="icon-btn danger" onclick="deleteRow('${month.id}', 'fijos', '${row.id}')" title="Borrar">×</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    // Helper: renderiza una fila de deuda
+    function renderDeudaRow(row) {
+        const total = sumArr(row.values);
+        const debt = state.debts.find(d => d.id === row.debtId);
+        const debtName = debt ? debt.name : (row.concept || "—");
+        const acc = debt ? (ACCOUNTS[getDebtAccount(debt)] || ACCOUNTS["BOFA"]) : ACCOUNTS["BOFA"];
+        let cells = "";
+        for (let w = 0; w < month.weeks; w++) {
+            const v = row.values[w] || 0;
+            cells += `<td class="center"><input type="number" class="cell-input ${v > 0 ? 'has-value-deuda' : ''}"
+                value="${v > 0 ? v : ''}" placeholder="0"
+                onchange="updateCell('${month.id}', 'deudas', '${row.id}', ${w}, this.value)"></td>`;
+        }
+        const hasAnyPayment = row.values.some(v => v > 0);
+        return `
+            <tr class="row-deuda">
+                <td>
+                    <div class="row-name" style="color: #FCA5A5;">
+                        💳 Pago ${debtName}
+                        <span class="bank-badge ${acc.cls}">${acc.label}</span>
+                        ${debt ? `<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">resta ${fmtMoney(debt.balance)}</span>` : ''}
+                    </div>
+                </td>
+                ${cells}
+                <td class="right"><span class="row-total red">${fmtMoney(total)}</span></td>
+                <td>
+                    <div class="row-actions">
+                        ${hasAnyPayment ? `<button class="icon-btn danger" onclick="clearDeudaRow('${month.id}', '${row.id}')" title="Limpiar pagos de este mes">×</button>` : ''}
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    // Construir tabla:
+    //   - filter === "all": fijos agrupados por cuenta con headers
+    //   - filter === "Conjunta" (u otra): solo fijos de esa cuenta, sin headers
+    // (los pagos a deuda ya NO van aqui; estan en una seccion separada al final
+    //  de la tabla, debajo de Sobra Rafa)
+    const colSpan = month.weeks + 3; // concepto + semanas + total + acciones
+    let fijoRows = "";
+    let deudaRows = ""; // deprecated - debts now render in separate section below
+
+    if (currentFilter === "all") {
+        ACCOUNT_ORDER.forEach(accKey => {
+            const fijosOfAcc = month.fijos.filter(r => r.account === accKey);
+            if (fijosOfAcc.length === 0) return;
+            const acc = ACCOUNTS[accKey];
+            fijoRows += `
+                <tr class="account-group-header">
+                    <td colspan="${colSpan}">
+                        <span class="group-label">
+                            <span class="group-dot" style="background: var(--${accKey.toLowerCase()}-color);"></span>
+                            ${acc.label}
+                        </span>
+                    </td>
+                </tr>
+            `;
+            fijosOfAcc.forEach(r => { fijoRows += renderFijoRow(r); });
+        });
+    } else {
+        month.fijos.filter(r => r.account === currentFilter).forEach(r => {
+            fijoRows += renderFijoRow(r);
+        });
+    }
+
+    // TOTAL GASTOS FIJOS (las deudas tienen su propia seccion al final, no se cuentan aqui)
+    let totalCells = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const fijoOnlyW = month.fijos.reduce((s, r) => s + (parseFloat(r.values[w]) || 0), 0);
+        totalCells += `<td class="center"><span class="row-total">${fmtMoney(fijoOnlyW)}</span></td>`;
+    }
+    const totalRow = `
+        <tr class="row-summary">
+            <td>TOTAL GASTOS FIJOS</td>
+            ${totalCells}
+            <td class="right"><span class="row-total">${fmtMoney(computed.totalFijos)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // INGRESO ALEJA
+    let ingresoAlejaCells = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const v = month.ingresoAleja[w] || 0;
+        ingresoAlejaCells += `<td class="center"><input type="number" class="cell-input ${v > 0 ? 'has-value-ingreso-aleja' : ''}"
+            value="${v > 0 ? v : ''}" placeholder="0"
+            onchange="updateIngreso('${month.id}', 'aleja', ${w}, this.value)"></td>`;
+    }
+    const ingresoAlejaRow = `
+        <tr class="row-ingreso-aleja">
+            <td>
+                <div class="row-name" style="color: #FFB3CD;">
+                    💗 INGRESO ALEJA
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">→ BOFA</span>
+                </div>
+            </td>
+            ${ingresoAlejaCells}
+            <td class="right"><span class="row-total aleja">${fmtMoney(computed.totalIngresoAleja)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // INGRESO RAFA
+    let ingresoRafaCells = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const v = month.ingresoRafa[w] || 0;
+        ingresoRafaCells += `<td class="center"><input type="number" class="cell-input ${v > 0 ? 'has-value-ingreso-rafa' : ''}"
+            value="${v > 0 ? v : ''}" placeholder="0"
+            onchange="updateIngreso('${month.id}', 'rafa', ${w}, this.value)"></td>`;
+    }
+    const ingresoRafaRow = `
+        <tr class="row-ingreso-rafa">
+            <td>
+                <div class="row-name" style="color: #FCD34D;">
+                    💛 INGRESO RAFA
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">→ BP Rafa</span>
+                </div>
+            </td>
+            ${ingresoRafaCells}
+            <td class="right"><span class="row-total rafa">${fmtMoney(computed.totalIngresoRafa)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // TRANSFERENCIA ALEJA → Conjunta (sugerida, editable)
+    let transferAlejaCells = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const sug = computed.perWeek[w].sugAleja;
+        const real = month.transferAleja[w];
+        const isManual = real !== null && real !== undefined;
+        const v = isManual ? real : sug;
+        const placeholder = sug > 0 ? `auto: ${fmtMoney(sug)}` : "0";
+        transferAlejaCells += `<td class="center"><input type="number" class="cell-input ${v > 0 ? 'suggested' : ''}"
+            value="${v > 0 ? v : ''}" placeholder="${placeholder}"
+            onchange="updateTransfer('${month.id}', 'aleja', ${w}, this.value)"
+            title="Sugerencia automática: ${fmtMoney(sug)}"></td>`;
+    }
+    const totalTransferAleja = computed.perWeek.reduce((s, w) => s + w.realAleja, 0);
+    const transferAlejaRow = `
+        <tr class="transfer-suggestion-row">
+            <td>
+                <div class="row-name">
+                    🔄 Aleja → Conjunta
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">proporcional</span>
+                </div>
+            </td>
+            ${transferAlejaCells}
+            <td class="right"><span class="row-total green">${fmtMoney(totalTransferAleja)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // TRANSFERENCIA RAFA → Conjunta
+    let transferRafaCells = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const sug = computed.perWeek[w].sugRafa;
+        const real = month.transferRafa[w];
+        const isManual = real !== null && real !== undefined;
+        const v = isManual ? real : sug;
+        const placeholder = sug > 0 ? `auto: ${fmtMoney(sug)}` : "0";
+        transferRafaCells += `<td class="center"><input type="number" class="cell-input ${v > 0 ? 'suggested' : ''}"
+            value="${v > 0 ? v : ''}" placeholder="${placeholder}"
+            onchange="updateTransfer('${month.id}', 'rafa', ${w}, this.value)"
+            title="Sugerencia automática: ${fmtMoney(sug)}"></td>`;
+    }
+    const totalTransferRafa = computed.perWeek.reduce((s, w) => s + w.realRafa, 0);
+    const transferRafaRow = `
+        <tr class="transfer-suggestion-row">
+            <td>
+                <div class="row-name">
+                    🔄 Rafa → Conjunta
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">proporcional</span>
+                </div>
+            </td>
+            ${transferRafaCells}
+            <td class="right"><span class="row-total green">${fmtMoney(totalTransferRafa)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // SOBRA LIBRE: Aleja personal + Rafa personal − deudas pagadas esa semana
+    // (sin settlement; cada uno ve su sobra personal, y juntos deciden con la total)
+    const activeDebt = state.debts.filter(d => d.balance > 0.01).sort((a, b) => a.priority - b.priority)[0];
+    const activeDebtName = activeDebt ? activeDebt.name : "ahorro";
+
+    let sobraAlejaCells = "", sobraRafaCells = "", sobraTotalCells = "";
+    let totalSobraAleja = 0, totalSobraRafa = 0, totalSobraLibre = 0;
+    for (let w = 0; w < month.weeks; w++) {
+        const wk = computed.perWeek[w];
+        const sobraAleja = wk.sobraAlejaPersonal;
+        const sobraRafa = wk.sobraRafaPersonal;
+        const sobraTotal = wk.sobraLibreTotal;
+        totalSobraAleja += sobraAleja;
+        totalSobraRafa += sobraRafa;
+        totalSobraLibre += sobraTotal;
+
+        const aClass = Math.abs(sobraAleja) < 1 ? "" : (sobraAleja > 0 ? "green" : "red");
+        const rClass = Math.abs(sobraRafa) < 1 ? "" : (sobraRafa > 0 ? "green" : "red");
+        const tClass = Math.abs(sobraTotal) < 1 ? "" : (sobraTotal > 0 ? "green" : "red");
+
+        sobraAlejaCells += `<td class="center"><span class="row-total ${aClass}" style="font-size: 12px;">${fmtMoney(sobraAleja)}</span></td>`;
+        sobraRafaCells  += `<td class="center"><span class="row-total ${rClass}" style="font-size: 12px;">${fmtMoney(sobraRafa)}</span></td>`;
+        sobraTotalCells += `<td class="center"><span class="row-total ${tClass}">${fmtMoney(sobraTotal)}</span></td>`;
+    }
+
+    const totalAClass = Math.abs(totalSobraAleja) < 1 ? "" : (totalSobraAleja > 0 ? "green" : "red");
+    const totalRClass = Math.abs(totalSobraRafa) < 1 ? "" : (totalSobraRafa > 0 ? "green" : "red");
+    const totalTClass = Math.abs(totalSobraLibre) < 1 ? "" : (totalSobraLibre > 0 ? "green" : "red");
+
+    // SOBRA PERSONAL (Aleja + Rafa) — antes de deudas
+    const sobraPersonalRows = `
+        <tr class="row-sobra-detail">
+            <td>
+                <div class="row-name" style="color: #FFB3CD;">
+                    💗 Sobra Aleja
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">personal, antes de deudas</span>
+                </div>
+            </td>
+            ${sobraAlejaCells}
+            <td class="right"><span class="row-total ${totalAClass}" style="font-size: 12px;">${fmtMoney(totalSobraAleja)}</span></td>
+            <td></td>
+        </tr>
+        <tr class="row-sobra-detail">
+            <td>
+                <div class="row-name" style="color: #FCD34D;">
+                    💛 Sobra Rafa
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">personal, antes de deudas</span>
+                </div>
+            </td>
+            ${sobraRafaCells}
+            <td class="right"><span class="row-total ${totalRClass}" style="font-size: 12px;">${fmtMoney(totalSobraRafa)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // PAGOS A DEUDA — una fila por deuda activa (o con pagos historicos en este mes).
+    // Aparecen entre las sobras personales y la sobra libre total.
+    let deudaPaymentRows = "";
+    month.deudas.forEach(row => {
+        deudaPaymentRows += renderDeudaRow(row);
+    });
+
+    // SOBRA LIBRE TOTAL — el numero "lo que sobra para que decidas"
+    const sobraLibreTotalRow = `
+        <tr class="row-sobra-libre">
+            <td>
+                <div class="row-name" style="color: var(--gold);">
+                    🎯 SOBRA LIBRE TOTAL
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-tertiary);">después de pagar deudas → ${activeDebtName} / ahorro / tú decides</span>
+                </div>
+            </td>
+            ${sobraTotalCells}
+            <td class="right"><span class="row-total ${totalTClass}">${fmtMoney(totalSobraLibre)}</span></td>
+            <td></td>
+        </tr>
+    `;
+
+    // ============================================================
+    // ACCOUNT SUMMARY (debajo de la tabla)
+    // ============================================================
+    const accountSummaryHtml = renderAccountSummary(month, computed, fridays);
+
+    div.innerHTML = `
+        ${header}
+        <div class="month-body">
+            ${weekConfig}
+            ${filterBar}
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            ${weekHeaders}
+                            <th class="right">Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${fijoRows}
+                        ${totalRow}
+                        ${ingresoAlejaRow}
+                        ${ingresoRafaRow}
+                        ${transferAlejaRow}
+                        ${transferRafaRow}
+                        ${sobraPersonalRows}
+                        ${deudaPaymentRows}
+                        ${sobraLibreTotalRow}
+                    </tbody>
+                </table>
+            </div>
+            <div class="add-row-buttons">
+                <button class="add-row-btn" onclick="addFijoRow('${month.id}')">+ Fila gasto</button>
+            </div>
+            ${accountSummaryHtml}
+        </div>
+    `;
+    return div;
+}
+
+function renderAccountSummary(month, computed, fridays) {
+    // Calcular gastos por cuenta por semana (solo OUTflows, lo que hay que separar)
+    // No incluimos transferencias internas (BOFA→Chase) porque son neutras al sistema.
+    // Para cada cuenta, lo que hay que separar esa semana = suma de gastos cuyo account === esa cuenta.
+    const weekGastosPorCuenta = []; // [{ BOFA: 125, Chase: 100, ... }, ...]
+    for (let w = 0; w < month.weeks; w++) {
+        const wk = {};
+        ACCOUNT_KEYS.forEach(k => wk[k] = 0);
+        month.fijos.forEach(r => {
+            const v = parseFloat(r.values[w]) || 0;
+            if (v > 0 && wk[r.account] !== undefined) wk[r.account] += v;
+        });
+        // Pagos a deuda: salen de la cuenta de la deuda (campo debt.account)
+        month.deudas.forEach(r => {
+            const v = parseFloat(r.values[w]) || 0;
+            if (v <= 0) return;
+            const debt = state.debts.find(d => d.id === r.debtId);
+            const acc = getDebtAccount(debt);
+            if (wk[acc] !== undefined) wk[acc] += v;
+        });
+        weekGastosPorCuenta.push(wk);
+    }
+
+    // Determinar cuentas con algún gasto en cualquier semana
+    const accountsWithFlow = new Set();
+    weekGastosPorCuenta.forEach(wk => {
+        Object.keys(wk).forEach(k => { if (wk[k] > 0) accountsWithFlow.add(k); });
+    });
+
+    if (accountsWithFlow.size === 0) {
+        return `
+            <div class="account-summary">
+                <div class="account-summary-title">📊 Resumen por cuenta · acumulado</div>
+                <div style="text-align: center; padding: 20px; color: var(--text-tertiary); font-style: italic; font-size: 12px;">
+                    Aparecerá cuando registres gastos con valores
+                </div>
+            </div>
+        `;
+    }
+
+    const orderedAccounts = ACCOUNT_KEYS.filter(k => accountsWithFlow.has(k));
+
+    // Header
+    let headerCells = `<div class="acc-summary-cell header label">Cuenta</div>`;
+    for (let w = 0; w < month.weeks; w++) {
+        const date = fridays && fridays[w] ? fridays[w] : `S${w+1}`;
+        headerCells += `<div class="acc-summary-cell header">S${w+1} (${date})`;
+        headerCells += `</div>`;
+    }
+    headerCells += `<div class="acc-summary-cell header">TOTAL</div>`;
+
+    // Filas: acumulado por cuenta (saldo que debería haber juntado al final de esa semana)
+    let rows = "";
+    orderedAccounts.forEach(accKey => {
+        const acc = ACCOUNTS[accKey];
+        let row = `<div class="acc-summary-cell label"><span class="bank-badge ${acc.cls}">${acc.label}</span></div>`;
+        let acumulado = 0;
+        for (let w = 0; w < month.weeks; w++) {
+            acumulado += weekGastosPorCuenta[w][accKey] || 0;
+            const cls = acumulado > 0 ? "value" : "value zero";
+            const display = acumulado > 0 ? fmtMoney(acumulado) : "—";
+            row += `<div class="acc-summary-cell ${cls}" style="color: ${acumulado > 0 ? `var(--${acc.cls.replace('bank-', '')}-color, var(--text-primary))` : 'var(--text-tertiary)'};">${display}</div>`;
+        }
+        const totalAcc = acumulado;
+        row += `<div class="acc-summary-cell value" style="font-weight: 800;">${totalAcc > 0 ? fmtMoney(totalAcc) : '—'}</div>`;
+        rows += row;
+    });
+
+    // Fila "ESTA SEMANA SEPARA" — lo que hay que poner cada semana (no acumulado)
+    let separaRow = `<div class="acc-summary-cell label" style="color: var(--gold); font-weight: 700;">💡 Separa</div>`;
+    for (let w = 0; w < month.weeks; w++) {
+        const wk = weekGastosPorCuenta[w];
+        const totalSemana = orderedAccounts.reduce((s, k) => s + (wk[k] || 0), 0);
+        separaRow += `<div class="acc-summary-cell" style="color: var(--gold); font-weight: 700;">${totalSemana > 0 ? fmtMoney(totalSemana) : '—'}</div>`;
+    }
+    const totalMes = weekGastosPorCuenta.reduce((s, wk) => {
+        return s + orderedAccounts.reduce((ss, k) => ss + (wk[k] || 0), 0);
+    }, 0);
+    separaRow += `<div class="acc-summary-cell" style="color: var(--gold); font-weight: 800;">${fmtMoney(totalMes)}</div>`;
+
+    // Detalle textual: "Esta semana separa: BOFA $X · Chase $Y..." por cada semana
+    let separaDetailHtml = "";
+    for (let w = 0; w < month.weeks; w++) {
+        const wk = weekGastosPorCuenta[w];
+        const partes = orderedAccounts
+            .filter(k => wk[k] > 0)
+            .map(k => `<span class="bank-badge ${ACCOUNTS[k].cls}" style="margin-right: 4px;">${ACCOUNTS[k].label}</span><strong style="color: var(--text-primary); margin-right: 12px;">${fmtMoney(wk[k])}</strong>`);
+        if (partes.length === 0) continue;
+        const dateLabel = fridays && fridays[w] ? fridays[w] : `S${w+1}`;
+        separaDetailHtml += `<div style="margin-top: 6px; line-height: 1.8;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-tertiary); display: inline-block; min-width: 90px;">S${w+1} (${dateLabel}):</span> ${partes.join("")}</div>`;
+    }
+
+    return `
+        <div class="account-summary">
+            <div class="account-summary-title">📊 Resumen por cuenta · saldo acumulado</div>
+            <div class="account-summary-grid" style="grid-template-columns: 130px repeat(${month.weeks}, 1fr) 90px;">
+                ${headerCells}
+                ${rows}
+                ${separaRow}
+            </div>
+            <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 10px; line-height: 1.4;">
+                💡 Cada celda muestra cuánto debes tener acumulado en esa cuenta al final de cada semana. La fila <strong style="color: var(--gold);">💡 Separa</strong> es el total que debes apartar esa semana.
+            </div>
+            <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);">
+                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 6px;">
+                    💡 ESTA SEMANA SEPARA:
+                </div>
+                ${separaDetailHtml || '<div style="color: var(--text-tertiary); font-size: 12px;">Sin gastos planeados</div>'}
+            </div>
+        </div>
+    `;
+}
+
+// ============================================================
+// ACCIONES
+// ============================================================
+function updateCell(monthId, section, rowId, week, value) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const row = m[section].find(r => r.id === rowId);
+    if (!row) return;
+    // Clamp a >=0: gastos y pagos a deuda no deberian ser negativos
+    row.values[week] = Math.max(0, parseFloat(value) || 0);
+    save(); render();
+}
+
+function updateIngreso(monthId, who, week, value) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const arr = who === "aleja" ? m.ingresoAleja : m.ingresoRafa;
+    arr[week] = Math.max(0, parseFloat(value) || 0);
+    save(); render();
+}
+
+function updateTransfer(monthId, who, week, value) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const arr = who === "aleja" ? m.transferAleja : m.transferRafa;
+    if (value === "" || value === null) {
+        arr[week] = null; // volver a sugerencia automática
+    } else {
+        arr[week] = Math.max(0, parseFloat(value) || 0);
+    }
+    save(); render();
+}
+
+function setAccountFilter(monthId, filter) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    m.accountFilter = filter;
+    save();
+    render();
+}
+
+function updateWeekCount(monthId, count) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const newCount = Math.max(3, Math.min(6, parseInt(count) || 4));
+    if (newCount === m.weeks) return;
+    [...m.fijos, ...m.deudas].forEach(row => {
+        if (newCount > row.values.length) {
+            while (row.values.length < newCount) row.values.push(0);
+        } else {
+            row.values = row.values.slice(0, newCount);
+        }
+    });
+    ['ingresoAleja', 'ingresoRafa', 'transferAleja', 'transferRafa'].forEach(key => {
+        const arr = m[key];
+        const fillVal = key.startsWith('transfer') ? null : 0;
+        if (newCount > arr.length) {
+            while (arr.length < newCount) arr.push(fillVal);
+        } else {
+            m[key] = arr.slice(0, newCount);
+        }
+    });
+    m.weeks = newCount;
+    save(); render();
+}
+
+function toggleMonth(monthId) {
+    const m = state.months.find(x => x.id === monthId);
+    if (m) { m.collapsed = !m.collapsed; save(); render(); }
+}
+
+function addMonth() {
+    const last = state.months[state.months.length - 1];
+    openModalSimple("Nuevo mes", [
+        { name: "label", label: "Nombre del mes", type: "text", placeholder: "Ej: Junio 2026" },
+    ], (vals) => {
+        if (!vals.label) return alert("Nombre requerido");
+        state.months.push(emptyMonth(vals.label, last));
+        save(); render();
+    });
+}
+
+function renameMonth(monthId) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const newName = prompt("Nuevo nombre del mes (ej: 'Junio 2026'):", m.label);
+    if (newName) { m.label = newName; save(); render(); }
+}
+
+function editStartDate(monthId) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const parsed = parseMonthLabel(m.label);
+    if (!parsed) {
+        alert("Para usar fecha de inicio, el mes debe llamarse así: 'Mayo 2026'");
+        return;
+    }
+    const currentDay = m.startDate ? m.startDate.split("/")[1] : "";
+    const dayStr = prompt(
+        `¿Qué día empieza la S1 de ${m.label}? (escribe solo el día, ej: 8 para 5/8)\n\nDéjalo vacío para usar el primer viernes del mes automáticamente.`,
+        currentDay
+    );
+    if (dayStr === null) return;
+    if (dayStr === "" || dayStr === undefined) {
+        m.startDate = null;
+    } else {
+        const day = parseInt(dayStr);
+        if (isNaN(day) || day < 1 || day > 31) {
+            alert("Día inválido");
+            return;
+        }
+        m.startDate = `${parsed.monthIdx + 1}/${day}`;
+    }
+    // Recalcular distribuciones que dependen de la fecha
+    const newWeekDates = getWeekDates(m);
+    m.fijos.forEach(row => {
+        if (row.distribution === "byPayDate" && row.payDay) {
+            row.values = distribute(row.monthly, row.distribution, m.weeks, row.payDay, newWeekDates);
+        }
+    });
+    save();
+    render();
+}
+
+function deleteMonth(monthId) {
+    if (!confirm("¿Borrar este mes completo?")) return;
+    state.months = state.months.filter(x => x.id !== monthId);
+    save(); render();
+}
+
+// ============================================================
+// FIJO ROW MODAL
+// ============================================================
+function fijoRowModal(title, current, monthRef, onSave) {
+    const weeks = monthRef ? monthRef.weeks : 4;
+    const weekDates = monthRef ? getWeekDates(monthRef) : null;
+    let monthly = current.monthly || 0;
+    let dist = current.distribution || "split4";
+    let payDay = current.payDay || "";
+
+    document.getElementById("modalTitle").textContent = title;
+    const body = document.getElementById("modalBody");
+    body.innerHTML = `
+        <label>Concepto</label>
+        <input type="text" id="ff-concept" value="${current.concept || ''}" placeholder="Ej: Gimnasio">
+
+        <label>Cuenta de origen</label>
+        <select id="ff-account">
+            ${ACCOUNT_KEYS.map(k => `<option value="${k}" ${current.account === k ? 'selected' : ''}>${ACCOUNTS[k].label}</option>`).join("")}
+        </select>
+
+        <div class="modal-divider"></div>
+
+        <label>Monto mensual total ($)</label>
+        <input type="number" id="ff-monthly" value="${monthly}" step="0.01">
+
+        <label>Día del mes en que se paga (opcional, 1-31)</label>
+        <input type="number" id="ff-payDay" value="${payDay}" min="1" max="31" placeholder="Ej: 20 para día 20">
+
+        <label>¿Cómo distribuir?</label>
+        <select id="ff-distribution">
+            <option value="byPayDate" ${dist === "byPayDate" ? 'selected' : ''}>📅 Según día de pago (auto)</option>
+            <option value="split4" ${dist === "split4" ? 'selected' : ''}>Dividir entre todas las semanas</option>
+            ${Array.from({length: weeks}, (_, i) => `<option value="week${i+1}" ${dist === `week${i+1}` ? 'selected' : ''}>Solo semana ${i+1}</option>`).join("")}
+            <option value="manual" ${dist === "manual" ? 'selected' : ''}>Manual</option>
+        </select>
+
+        <div class="modal-help">
+            💡 <strong>Según día de pago</strong>: divide el monto entre los últimos 2 viernes ANTES del día (ej: día 20, pone la mitad en S2 y mitad en S3 si están antes).<br>
+            💡 <strong>Dividir entre todas</strong>: reparte el monto en partes iguales.<br>
+            💡 <strong>Manual</strong>: no recalcula, conserva valores.
+        </div>
+
+        <div class="modal-divider"></div>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="ff-isAhorro" ${current.isAhorro ? 'checked' : ''} style="width: auto; margin: 0;">
+            <span>Es fila de ahorro (cuenta para el total acumulado, se marca en verde)</span>
+        </label>
+
+        <div class="distribution-preview" id="ff-preview"></div>
+    `;
+
+    function refreshPreview() {
+        const monthlyVal = parseFloat(document.getElementById("ff-monthly").value) || 0;
+        const distVal = document.getElementById("ff-distribution").value;
+        const payDayVal = parseInt(document.getElementById("ff-payDay").value) || null;
+        const preview = document.getElementById("ff-preview");
+
+        if (distVal === "manual") {
+            preview.innerHTML = `<div class="distribution-preview-row" style="text-align: center; justify-content: center;"><em>Modo manual — no se cambian las semanas</em></div>`;
+            return;
+        }
+
+        if (distVal === "byPayDate" && !payDayVal) {
+            preview.innerHTML = `<div class="distribution-preview-row" style="text-align: center; justify-content: center; color: #FCA5A5;"><em>⚠️ Necesitas especificar el día de pago arriba</em></div>`;
+            return;
+        }
+
+        const arr = distribute(monthlyVal, distVal, weeks, payDayVal, weekDates);
+        preview.innerHTML = arr.map((v, i) => {
+            const weekLabel = weekDates && weekDates[i] ? `S${i+1} (${weekDates[i].label})` : `Semana ${i+1}`;
+            return `<div class="distribution-preview-row">
+                <span>${weekLabel}</span>
+                <strong>${fmtMoney(v)}</strong>
+            </div>`;
+        }).join("") + `<div class="distribution-preview-row" style="border-top: 1px solid var(--line); padding-top: 4px; margin-top: 4px;">
+            <span>Total</span><strong>${fmtMoney(arr.reduce((a,b) => a+b, 0))}</strong>
+        </div>`;
+    }
+
+    document.getElementById("ff-monthly").oninput = refreshPreview;
+    document.getElementById("ff-distribution").onchange = refreshPreview;
+    document.getElementById("ff-payDay").oninput = refreshPreview;
+    refreshPreview();
+
+    document.getElementById("modalSaveBtn").onclick = () => {
+        const concept = document.getElementById("ff-concept").value.trim();
+        if (!concept) return alert("Concepto requerido");
+        const distVal = document.getElementById("ff-distribution").value;
+        const payDayVal = parseInt(document.getElementById("ff-payDay").value) || null;
+        if (distVal === "byPayDate" && !payDayVal) {
+            return alert("Para 'Según día de pago' necesitas escribir un día (1-31)");
+        }
+        const result = {
+            concept,
+            account: document.getElementById("ff-account").value,
+            monthly: parseFloat(document.getElementById("ff-monthly").value) || 0,
+            distribution: distVal,
+            payDay: payDayVal,
+            isAhorro: document.getElementById("ff-isAhorro").checked,
+        };
+        closeModal();
+        onSave(result);
+    };
+    document.getElementById("modal").classList.add("open");
+}
+
+function addFijoRow(monthId) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    fijoRowModal("Agregar gasto fijo", { concept: "", account: "BOFA", monthly: 0, distribution: "split4", payDay: null, isAhorro: false }, m, (vals) => {
+        const weekDates = getWeekDates(m);
+        const values = vals.distribution === "manual"
+            ? new Array(m.weeks).fill(0)
+            : distribute(vals.monthly, vals.distribution, m.weeks, vals.payDay, weekDates);
+        m.fijos.push({
+            id: "r-" + Date.now(),
+            concept: vals.concept,
+            account: vals.account,
+            monthly: vals.monthly,
+            distribution: vals.distribution,
+            payDay: vals.payDay,
+            isAhorro: !!vals.isAhorro,
+            values,
+        });
+        save(); render();
+    });
+}
+
+function editFijoRow(monthId, rowId) {
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const row = m.fijos.find(r => r.id === rowId);
+    if (!row) return;
+    fijoRowModal("Editar gasto fijo", {
+        concept: row.concept, account: row.account,
+        monthly: row.monthly, distribution: row.distribution,
+        payDay: row.payDay,
+        isAhorro: !!row.isAhorro,
+    }, m, (vals) => {
+        row.concept = vals.concept;
+        row.account = vals.account;
+        row.monthly = vals.monthly;
+        row.distribution = vals.distribution;
+        row.payDay = vals.payDay;
+        row.isAhorro = !!vals.isAhorro;
+        if (vals.distribution !== "manual") {
+            const weekDates = getWeekDates(m);
+            row.values = distribute(vals.monthly, vals.distribution, m.weeks, vals.payDay, weekDates);
+        }
+        save(); render();
+    });
+}
+
+// ============================================================
+// DEUDA ROW (autogestionado: solo limpiar pagos)
+// ============================================================
+function clearDeudaRow(monthId, rowId) {
+    if (!confirm("¿Limpiar todos los pagos a esta deuda en este mes?")) return;
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    const row = m.deudas.find(r => r.id === rowId);
+    if (!row) return;
+    row.values = new Array(m.weeks).fill(0);
+    save(); render();
+}
+
+function deleteRow(monthId, section, rowId) {
+    if (!confirm("¿Borrar esta fila?")) return;
+    const m = state.months.find(x => x.id === monthId);
+    if (!m) return;
+    m[section] = m[section].filter(r => r.id !== rowId);
+    save(); render();
+}
+
+// ============================================================
+// DEUDAS GLOBALES
+// ============================================================
+function addDebt() {
+    openModalSimple("Nueva deuda", [
+        { name: "name", label: "Nombre", type: "text", placeholder: "Ej: Tarjeta X" },
+        { name: "account", label: "Cuenta de pago", type: "select", value: "BOFA",
+          options: ACCOUNT_KEYS.map(k => ({ value: k, label: ACCOUNTS[k].label })) },
+        { name: "balance", label: "Balance actual ($)", type: "number", value: 0 },
+        { name: "apr", label: "APR (%) ej. 24", type: "number", value: 0 },
+        { name: "priority", label: "Prioridad (1=primera)", type: "number", value: state.debts.length + 1 },
+    ], (vals) => {
+        if (!vals.name) return;
+        const balance = parseFloat(vals.balance) || 0;
+        state.debts.push({
+            id: "d-" + Date.now(),
+            name: vals.name,
+            account: vals.account || "BOFA",
+            balance, initial: balance,
+            apr: (parseFloat(vals.apr) || 0) / 100,
+            priority: parseInt(vals.priority) || state.debts.length + 1,
+        });
+        save(); render();
+    });
+}
+
+function updateDebt(debtId) {
+    const d = state.debts.find(x => x.id === debtId);
+    if (!d) return;
+    const newBalance = prompt(
+        `Balance real actual de ${d.name} según el banco:\n\n` +
+        `(Esto ajusta el principal — útil si hubo interés, un cargo nuevo, o quieres sincronizar con tu estado de cuenta. ` +
+        `Los pagos que ya tienes anotados se conservan.)`,
+        d.balance
+    );
+    if (newBalance === null) return;
+    const newVal = Math.max(0, parseFloat(newBalance) || 0);
+    const paid = getDebtTotalPaid(d.id);
+    // Ajustar initial para que balance computado (= initial - paid) sea igual a newVal
+    d.initial = newVal + paid;
+    // d.balance se recomputa en el siguiente render
+    save(); render();
+}
+
+function editDebtDetails(debtId) {
+    const d = state.debts.find(x => x.id === debtId);
+    if (!d) return;
+    openModalSimple("Editar deuda", [
+        { name: "name", label: "Nombre", type: "text", value: d.name },
+        { name: "account", label: "Cuenta de pago", type: "select",
+          value: d.account || getDebtAccount(d),
+          options: ACCOUNT_KEYS.map(k => ({ value: k, label: ACCOUNTS[k].label })) },
+        { name: "apr", label: "APR (%)", type: "number", value: (d.apr * 100).toFixed(2) },
+        { name: "priority", label: "Prioridad (1=primera)", type: "number", value: d.priority },
+    ], (vals) => {
+        if (!vals.name) return;
+        d.name = vals.name;
+        d.account = vals.account || d.account || "BOFA";
+        d.apr = (parseFloat(vals.apr) || 0) / 100;
+        d.priority = parseInt(vals.priority) || d.priority;
+        save(); render();
+    });
+}
+
+function deleteDebt(debtId) {
+    if (!confirm("¿Borrar esta deuda?")) return;
+    state.debts = state.debts.filter(x => x.id !== debtId);
+    save(); render();
+}
+
+// ============================================================
+// EXPORT/IMPORT
+// ============================================================
+// Subir este numero si cambias la estructura del state (causa rechazo de backups incompatibles)
+const SCHEMA_VERSION = 3;
+
+function exportData() {
+    const payload = {
+        schemaVersion: SCHEMA_VERSION,
+        exportedAt: new Date().toISOString(),
+        state,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `velocity_${new Date().toISOString().split("T")[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function importData() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            // Snapshot del state actual para rollback si el import revienta
+            const snapshot = JSON.parse(JSON.stringify(state));
+            try {
+                const parsed = JSON.parse(ev.target.result);
+
+                // Dos formatos soportados:
+                //   1. Nuevo: { schemaVersion, exportedAt, state: {...} }
+                //   2. Viejo (legacy): { months, debts } directamente
+                let imported;
+                let importedVersion;
+                if (parsed && parsed.state && parsed.schemaVersion !== undefined) {
+                    imported = parsed.state;
+                    importedVersion = parsed.schemaVersion;
+                } else if (parsed && parsed.months && parsed.debts) {
+                    imported = parsed;
+                    importedVersion = null; // legacy sin version
+                } else {
+                    throw new Error("El archivo no parece un backup de Velocity");
+                }
+
+                if (importedVersion !== null && importedVersion > SCHEMA_VERSION) {
+                    throw new Error(`Este backup es de una versión más nueva (v${importedVersion}). Tu app está en v${SCHEMA_VERSION}. Actualiza el HTML antes de importar.`);
+                }
+
+                if (!Array.isArray(imported.months) || !Array.isArray(imported.debts)) {
+                    throw new Error("Estructura inválida: faltan 'months' o 'debts'");
+                }
+
+                const versionMsg = importedVersion === null
+                    ? "Backup sin versión (formato viejo)."
+                    : (importedVersion < SCHEMA_VERSION ? `Backup v${importedVersion}, app v${SCHEMA_VERSION} (compatible).` : `Backup v${importedVersion}.`);
+
+                if (!confirm(`${versionMsg}\n¿Reemplazar todos los datos actuales?`)) return;
+
+                state = imported;
+                migrateState(); // normaliza al schema actual (account, isAhorro, etc)
+
+                // Probar render: si falla, rollback al snapshot
+                try {
+                    save(true); // immediate = true, sube a Supabase de una
+                    render();
+                } catch (renderErr) {
+                    state = snapshot;
+                    save(true);
+                    render();
+                    throw new Error("El backup se cargó pero el render falló. Se revirtió al state anterior. Detalle: " + renderErr.message);
+                }
+            } catch (err) {
+                alert("Error al importar: " + err.message);
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModalSimple(title, fields, onSave) {
+    document.getElementById("modalTitle").textContent = title;
+    const body = document.getElementById("modalBody");
+    body.innerHTML = "";
+    fields.forEach(f => {
+        const label = document.createElement("label");
+        label.textContent = f.label;
+        body.appendChild(label);
+        let inputEl;
+        if (f.type === "select") {
+            inputEl = document.createElement("select");
+            (f.options || []).forEach(opt => {
+                const o = document.createElement("option");
+                o.value = opt.value;
+                o.textContent = opt.label;
+                if (opt.value === f.value) o.selected = true;
+                inputEl.appendChild(o);
+            });
+        } else {
+            inputEl = document.createElement("input");
+            inputEl.type = f.type || "text";
+            if (f.value !== undefined) inputEl.value = f.value;
+            if (f.placeholder) inputEl.placeholder = f.placeholder;
+        }
+        inputEl.id = "modal-field-" + f.name;
+        body.appendChild(inputEl);
+    });
+    document.getElementById("modalSaveBtn").onclick = () => {
+        const vals = {};
+        fields.forEach(f => {
+            vals[f.name] = document.getElementById("modal-field-" + f.name).value;
+        });
+        closeModal();
+        onSave(vals);
+    };
+    document.getElementById("modal").classList.add("open");
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.remove("open");
+}
+
+// ============================================================
+// BOOTSTRAP: PIN gate primero, despues carga de Supabase
+// ============================================================
+async function bootApp() {
+    // Mostrar la UI de la app (estaba oculta)
+    document.getElementById("appContainer").style.display = "";
+    document.getElementById("syncStatus").style.display = "flex";
+
+    await load();
+    render();
+}
+
+// Esperar a que el Supabase SDK termine de cargar (ES module asincrono)
+function waitForSupabaseAndStart() {
+    if (window.__supabaseCreateClient) {
+        setupPinGate();
+    } else {
+        setTimeout(waitForSupabaseAndStart, 50);
+    }
+}
+
+waitForSupabaseAndStart();
+</script>
+</body>
+</html>
