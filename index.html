@@ -500,7 +500,7 @@ tr:hover .row-actions { opacity: 1; }
 }
 .account-summary-grid {
     display: grid;
-    grid-template-columns: 100px repeat(auto-fit, minmax(110px, 1fr));
+    grid-template-columns: 130px repeat(var(--weeks-count, 4), minmax(0, 1fr)) 90px;
     gap: 0;
     overflow-x: auto;
 }
@@ -839,7 +839,26 @@ tbody tr.account-group-header td .group-dot {
     .week-count-input { font-size: 16px; }
     .week-header-date { font-size: 11px; }
     .account-summary-grid {
-        grid-template-columns: 80px repeat(auto-fit, minmax(90px, 1fr)) !important;
+        /* En mobile: 2 columnas (etiqueta cuenta + columna de la semana activa).
+           Las demas columnas de semana y la columna TOTAL se ocultan. */
+        grid-template-columns: 110px 1fr !important;
+        overflow-x: visible !important;
+    }
+    /* Ocultar las celdas de semanas no activas */
+    .account-summary-grid .summary-week-cell:not(.week-active) {
+        display: none;
+    }
+    /* Ocultar la columna TOTAL en mobile (es menos util en una sola columna) */
+    .account-summary-grid .summary-total-cell {
+        display: none;
+    }
+    /* En el detalle textual "ESTA SEMANA SEPARA", solo mostrar la semana activa */
+    .separa-detail-row:not(.week-active) {
+        display: none;
+    }
+    /* Ocultar el texto "ayuda" del grid en mobile — el desglose de abajo lo deja claro */
+    .account-summary-help {
+        display: none;
     }
     .modal input, .modal select { font-size: 16px; }
     .header { padding: 8px 0 16px; margin-bottom: 16px; }
@@ -2463,10 +2482,10 @@ function renderMonth(month) {
         </div>
     `;
 
-    // Marcar las celdas TD con la clase week-active correspondiente.
-    // El header TH ya tiene la clase desde el template. Las TDs no porque
-    // las generaron sed/loops sin condicional. Las marco aqui en un solo pase.
-    div.querySelectorAll("td.week-cell").forEach(el => {
+    // Marcar todos los elementos con data-week que corresponden a la semana activa.
+    // Esto cubre: TDs de la tabla principal, celdas del summary grid, detail rows.
+    // El header TH ya tiene la clase desde el template.
+    div.querySelectorAll("[data-week]").forEach(el => {
         const w = parseInt(el.getAttribute("data-week"));
         if (w === activeWeek) el.classList.add("week-active");
     });
@@ -2520,10 +2539,10 @@ function renderAccountSummary(month, computed, fridays) {
     let headerCells = `<div class="acc-summary-cell header label">Cuenta</div>`;
     for (let w = 0; w < month.weeks; w++) {
         const date = fridays && fridays[w] ? fridays[w] : `S${w+1}`;
-        headerCells += `<div class="acc-summary-cell header">S${w+1} (${date})`;
+        headerCells += `<div class="acc-summary-cell header summary-week-cell" data-week="${w}">S${w+1} (${date})`;
         headerCells += `</div>`;
     }
-    headerCells += `<div class="acc-summary-cell header">TOTAL</div>`;
+    headerCells += `<div class="acc-summary-cell header summary-total-cell">TOTAL</div>`;
 
     // Filas: acumulado por cuenta (saldo que debería haber juntado al final de esa semana)
     let rows = "";
@@ -2535,10 +2554,10 @@ function renderAccountSummary(month, computed, fridays) {
             acumulado += weekGastosPorCuenta[w][accKey] || 0;
             const cls = acumulado > 0 ? "value" : "value zero";
             const display = acumulado > 0 ? fmtMoney(acumulado) : "—";
-            row += `<div class="acc-summary-cell ${cls}" style="color: ${acumulado > 0 ? `var(--${acc.cls.replace('bank-', '')}-color, var(--text-primary))` : 'var(--text-tertiary)'};">${display}</div>`;
+            row += `<div class="acc-summary-cell ${cls} summary-week-cell" data-week="${w}" style="color: ${acumulado > 0 ? `var(--${acc.cls.replace('bank-', '')}-color, var(--text-primary))` : 'var(--text-tertiary)'};">${display}</div>`;
         }
         const totalAcc = acumulado;
-        row += `<div class="acc-summary-cell value" style="font-weight: 800;">${totalAcc > 0 ? fmtMoney(totalAcc) : '—'}</div>`;
+        row += `<div class="acc-summary-cell value summary-total-cell" style="font-weight: 800;">${totalAcc > 0 ? fmtMoney(totalAcc) : '—'}</div>`;
         rows += row;
     });
 
@@ -2547,12 +2566,12 @@ function renderAccountSummary(month, computed, fridays) {
     for (let w = 0; w < month.weeks; w++) {
         const wk = weekGastosPorCuenta[w];
         const totalSemana = orderedAccounts.reduce((s, k) => s + (wk[k] || 0), 0);
-        separaRow += `<div class="acc-summary-cell" style="color: var(--gold); font-weight: 700;">${totalSemana > 0 ? fmtMoney(totalSemana) : '—'}</div>`;
+        separaRow += `<div class="acc-summary-cell summary-week-cell" data-week="${w}" style="color: var(--gold); font-weight: 700;">${totalSemana > 0 ? fmtMoney(totalSemana) : '—'}</div>`;
     }
     const totalMes = weekGastosPorCuenta.reduce((s, wk) => {
         return s + orderedAccounts.reduce((ss, k) => ss + (wk[k] || 0), 0);
     }, 0);
-    separaRow += `<div class="acc-summary-cell" style="color: var(--gold); font-weight: 800;">${fmtMoney(totalMes)}</div>`;
+    separaRow += `<div class="acc-summary-cell summary-total-cell" style="color: var(--gold); font-weight: 800;">${fmtMoney(totalMes)}</div>`;
 
     // Detalle textual: "Esta semana separa: BOFA $X · Chase $Y..." por cada semana
     let separaDetailHtml = "";
@@ -2563,18 +2582,18 @@ function renderAccountSummary(month, computed, fridays) {
             .map(k => `<span class="bank-badge ${ACCOUNTS[k].cls}" style="margin-right: 4px;">${ACCOUNTS[k].label}</span><strong style="color: var(--text-primary); margin-right: 12px;">${fmtMoney(wk[k])}</strong>`);
         if (partes.length === 0) continue;
         const dateLabel = fridays && fridays[w] ? fridays[w] : `S${w+1}`;
-        separaDetailHtml += `<div style="margin-top: 6px; line-height: 1.8;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-tertiary); display: inline-block; min-width: 90px;">S${w+1} (${dateLabel}):</span> ${partes.join("")}</div>`;
+        separaDetailHtml += `<div class="separa-detail-row" data-week="${w}" style="margin-top: 6px; line-height: 1.8;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-tertiary); display: inline-block; min-width: 90px;">S${w+1} (${dateLabel}):</span> ${partes.join("")}</div>`;
     }
 
     return `
         <div class="account-summary">
             <div class="account-summary-title">📊 Resumen por cuenta · saldo acumulado</div>
-            <div class="account-summary-grid" style="grid-template-columns: 130px repeat(${month.weeks}, 1fr) 90px;">
+            <div class="account-summary-grid" style="--weeks-count: ${month.weeks};">
                 ${headerCells}
                 ${rows}
                 ${separaRow}
             </div>
-            <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 10px; line-height: 1.4;">
+            <div class="account-summary-help" style="font-size: 11px; color: var(--text-tertiary); margin-top: 10px; line-height: 1.4;">
                 💡 Cada celda muestra cuánto debes tener acumulado en esa cuenta al final de cada semana. La fila <strong style="color: var(--gold);">💡 Separa</strong> es el total que debes apartar esa semana.
             </div>
             <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);">
@@ -2685,7 +2704,8 @@ function updateActiveWeekClasses(month) {
     if (!card) return;
     const activeWeek = getActiveWeek(month);
 
-    // Toggle .week-active en todos los TH/TD con data-week
+    // Toggle .week-active en TODOS los elementos con data-week en este mes
+    // (TH/TD de la tabla principal, celdas del summary grid, detail rows)
     card.querySelectorAll("[data-week]").forEach(el => {
         const w = parseInt(el.getAttribute("data-week"));
         el.classList.toggle("week-active", w === activeWeek);
